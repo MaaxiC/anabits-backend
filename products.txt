@@ -2,19 +2,19 @@
    {
       "title": "JBL Live 460NC",
       "price": 110,
-      "image": "https://co.jbl.com/dw/image/v2/AAUJ_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw448a0a5f/JBL_LIVE_460NC_Product%20Image_Hero_Black.png?sw=537&sfrm=png",
+      "thumbnail": "https://co.jbl.com/dw/image/v2/AAUJ_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw448a0a5f/JBL_LIVE_460NC_Product%20Image_Hero_Black.png?sw=537&sfrm=png",
       "id": 1
    },
    {
       "title": "Shure SM58LC",
       "price": 100,
-      "image": "https://www.heavenimagenes.com/heavencommerce/d86f9793-89bd-4e00-8fd3-fdfdc49c7186/images/v2/Shure/1009040953009971_02_medium.jpg",
+      "thumbnail": "https://www.heavenimagenes.com/heavencommerce/d86f9793-89bd-4e00-8fd3-fdfdc49c7186/images/v2/Shure/1009040953009971_02_medium.jpg",
       "id": 2
    },
    {
       "title": "Bose QuietComfort",
       "price": 280,
-      "image": "https://assets.bose.com/content/dam/Bose_DAM/Web/consumer_electronics/global/products/headphones/qc35_ii/product_silo_images/qc35_ii_black_EC_hero.psd/jcr:content/renditions/cq5dam.web.600.600.png",
+      "thumbnail": "https://assets.bose.com/content/dam/Bose_DAM/Web/consumer_electronics/global/products/headphones/qc35_ii/product_silo_images/qc35_ii_black_EC_hero.psd/jcr:content/renditions/cq5dam.web.600.600.png",
       "id": 3
    }
 ]
