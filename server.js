@@ -1,20 +1,29 @@
 import express from 'express'
-import Api from './api.js'
+import Api from './api/api.js'
 
 const app = express()
 const routerProducts = express.Router()
 const api = new Api('./products.txt')
 
-app.use('/api', routerProducts)
+app.use('/', routerProducts)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 routerProducts.use(express.json())
 routerProducts.use(express.urlencoded({ extended: true }))
 
+app.set('views', './views');
+app.set('view engine', 'ejs');
+//Prefiero usar ejs debido a que parece una herramienta con algunas funciones extra a HandleBars y la sintaxis me parece mucha mas amigable
+
+routerProducts.get('/', async (req, res) => {
+    const products = []
+    res.render('./ejs/index', {products})
+})
+
 routerProducts.get('/productos', async (req, res) => {
     const products = await api.getAll()
-    res.json(products)
+    res.render('./ejs/table', {products})
 })
 
 routerProducts.get('/productos/:id', async (req, res) => {
@@ -35,7 +44,8 @@ routerProducts.get('/productos/:id', async (req, res) => {
 routerProducts.post('/productos', async (req, res) => {
     let product = req.body
     if (!isNaN(product.price)) {
-        res.json(await api.save(product))
+        await api.save(product)
+        res.redirect('/')
     } else {
         res.json({error: 'precio debe ser un numero'})
     }

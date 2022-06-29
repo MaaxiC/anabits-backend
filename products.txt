@@ -16,5 +16,29 @@
       "price": 280,
       "thumbnail": "https://assets.bose.com/content/dam/Bose_DAM/Web/consumer_electronics/global/products/headphones/qc35_ii/product_silo_images/qc35_ii_black_EC_hero.psd/jcr:content/renditions/cq5dam.web.600.600.png",
       "id": 3
+   },
+   {
+      "title": "PreSonus Eris E3.5",
+      "price": "130",
+      "thumbnail": "https://sc1.musik-produktiv.com/pic-010125741xl/presonus-eris-e3-5-bt.jpg",
+      "id": 4
+   },
+   {
+      "title": "Denon DJ PRIME 2",
+      "price": "1500",
+      "thumbnail": "https://images.musicstore.de/images/0960/denon-dj-prime-2_1_DJE0007379-000.jpg",
+      "id": 5
+   },
+   {
+      "title": "Mackie ProFXv3",
+      "price": "170",
+      "thumbnail": "https://mackie.com/img/pic_hero_desktop/2051300-00_ProFX10v3_Web.png",
+      "id": 6
+   },
+   {
+      "title": "KRK RP5 Rokit 5",
+      "price": "378",
+      "thumbnail": "https://bairesrocks.vteximg.com.br/arquivos/ids/202307/992877-MLA32737209106_112019-F.jpg?v=637313062047930000",
+      "id": 7
    }
 ]
