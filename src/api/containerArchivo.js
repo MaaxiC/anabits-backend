@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-class Api {
+class ContainerArchivo {
     constructor (fileName){
         this.fileName  = fileName
     }
@@ -47,7 +47,7 @@ class Api {
                 price: product.price,
                 thumbnail: product.thumbnail,
                 id: id
-            }
+            } //const elementIndex = this.products.findIndex(e => e.id == id)
             await fs.promises.writeFile(this.fileName, JSON.stringify(array, null, 3))
             return array[id - 1]
         } catch (error) {
@@ -67,4 +67,4 @@ class Api {
     }
 }
 
-export default Api
+export { ContainerArchivo }

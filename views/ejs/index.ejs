@@ -11,7 +11,7 @@
             <div class="card p-3" style="background-color:coral; width:500px;" >
                 <h1 style="color:blue;">Enter the product</h1>
                 <br>
-                <form action="/productos" method="post">
+                <form action="/api/productos" method="post">
                     <div class="form-floating mb-3">
                         <input id="title" class="form-control" type="text" name="title" placeholder="Title">
                         <label for="title">Title</label>
@@ -28,6 +28,7 @@
                         <button class="btn btn-primary mt-3">Send</button>
                     </div>
                 </form>
+                <a class="btn btn-info mt-3" href="/api/productos">See list of products</a>
             </div>
         </div>
     </body>
