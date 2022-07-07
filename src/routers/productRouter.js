@@ -28,8 +28,13 @@ productRouter.post('/', (req, res) => {
     const { title, price, thumbnail } = req.body
     const product = { title, price, thumbnail }
     if (!isNaN(product.price)) {
-        productApi.save(product)
-        res.redirect('/')
+        if (title.trim() == '' || price.trim() == '' || thumbnail.trim() == '') {
+            res.json({error: 'ningun campo puede estar vacio'})
+        }
+        else {
+            productApi.save(product)
+            res.redirect('/')
+        }
     } else {
         res.json({error: 'precio debe ser un numero'})
     }
