@@ -1,65 +1,101 @@
 import { Router } from 'express';
-import { ContainerMemoria } from '../api/containerMemoria.js'
+import { ContainerArchivo } from '../api/fileContainer.js'
+import { ERRORS } from '../utils/index.js'
+import { Admin } from "../middlewares/index.js"
 
 const productRouter = Router()
-const productApi = new ContainerMemoria()
+const productApi = new ContainerArchivo('./src/data/products.json')
 
-productRouter.get('/', (req, res) => {
-    const products = productApi.getAll()
-    res.render('./ejs/table', {products})
+productRouter.get('/', async (req, res) => {
+    try {
+        const products = await productApi.getAll();
+        res.json(products);
+    } catch (error) {
+        res.json(error);
+    }
 })
 
-productRouter.get('/:id', (req, res) => {
-    const productID = parseInt(req.params.id)
-    const products = productApi.getAll()
-    if (!isNaN(productID)) {
-        if (productID >= 1 && productID <= products.length) {
-            const product = productApi.getById(productID)
-            res.json(product)
+productRouter.get('/:id', async (req, res) => {
+    try {
+        const productID = parseInt(req.params.id)
+        if (!isNaN(productID)) {
+            const product = await productApi.getById(productID)
+            if (!product) {
+                res.json({ error: ERRORS.MESSAGES.NO_PRODUCT })
+            } else {
+                res.json(product)
+            }
         } else {
-            res.json({error: 'producto no encontrado'})
-        }       
-    } else {
-        res.json({error: 'id debe ser un numero'})   
-    }
-})
-
-productRouter.post('/', (req, res) => {
-    const { title, price, thumbnail } = req.body
-    const product = { title, price, thumbnail }
-    if (!isNaN(product.price)) {
-        if (title.trim() == '' || price.trim() == '' || thumbnail.trim() == '') {
-            res.json({error: 'ningun campo puede estar vacio'})
+            res.json({ error: ERRORS.MESSAGES.NOT_A_NUMBER })   
         }
-        else {
-            productApi.save(product)
-            res.redirect('/')
+    } catch (error) {
+        res.json(error)
+    }
+})
+
+productRouter.post('/', Admin, async (req, res) => {
+    try {
+        const { nombre, descripcion, codigo, precio, foto, stock } = req.body
+        const product = { nombre, descripcion, codigo, foto}
+        product.precio = parseInt(precio)
+        product.stock = parseInt(stock)
+        if (!isNaN(product.precio) && !isNaN(product.stock)) {
+            if (nombre.trim() == '' || descripcion.trim() == '' || codigo.trim() == '' || precio.trim() == '' || foto.trim() == '' || stock.trim() == '') {
+                res.json({ error: 'ningun campo puede estar vacio' })
+            }
+            else {
+                await productApi.save(product)
+                res.redirect('/api')
+            }
+        } else {
+            res.json({ error: 'precio y stock deben ser numericos' })
         }
-    } else {
-        res.json({error: 'precio debe ser un numero'})
+    } catch (error) {
+        res.json(error)
     }
 })
 
-productRouter.put('/:id', (req, res) => {
-    const { title, price, thumbnail } = req.body
-    const productID = parseInt(req.params.id)
-    if (!isNaN(productID)) {
-        const product = productApi.updateById(productID, { title, price, thumbnail })
-        if (product.error) res.json({ error: 'producto no encontrado'})
-        res.json(product)
-    } else {
-        res.json({error: 'id debe ser un numero'})   
+productRouter.put('/:id', Admin, async (req, res) => {
+    try {
+        const { nombre, descripcion, codigo, precio, foto, stock } = req.body
+        const productUpdate = { nombre, descripcion, codigo, foto }
+        const productID = parseInt(req.params.id)
+        productUpdate.precio = parseInt(precio)
+        productUpdate.stock = parseInt(stock)
+        if (!isNaN(productID)) {
+            if (!isNaN(productUpdate.precio) && !isNaN(productUpdate.stock)) {
+                const product = await productApi.update(productID, productUpdate)
+                if (product.error) {
+                    res.json({ error: ERRORS.MESSAGES.NO_PRODUCT })
+                } else {
+                    res.json(product)
+                }
+            } else {
+                res.json({ error: 'precio y stock deben ser numericos' })   
+            }
+        } else {
+            res.json({ error: ERRORS.MESSAGES.NOT_A_NUMBER })   
+        }
+    } catch (error) {
+        res.json(error)
     }
 })
 
-productRouter.delete('/:id', (req, res) => {
-    let productID = parseInt(req.params.id)
-    if (!isNaN(productID)) {
-            const product = productApi.deleteById(productID)
-            if (product.error) res.json({ error: 'producto no encontrado'})
-            res.json({ success: 'producto eliminado correctamente' })      
-    } else {
-        res.json({error: 'id debe ser un numero'})   
+productRouter.delete('/:id', Admin, async (req, res) => {
+    try {
+        let productID = parseInt(req.params.id)
+        if (!isNaN(productID)) {
+            const product = await productApi.deleteById(productID)
+            if (product.error) {
+                res.json({ error: ERRORS.MESSAGES.NO_PRODUCT })
+            } else {
+                res.json({ success: 'producto eliminado correctamente' }) 
+            }
+        } else {
+            res.json({ error: ERRORS.MESSAGES.NOT_A_NUMBER })   
+        }  
+    } catch (error) {
+        res.json(error)
     }
 })
 

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add Product</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container mt-5 mb-5 d-flex justify-content-center">
+            <div class="card p-3" style="background-color:coral; width:500px;" >
+                <h1 class="text-center">Enter the product</h1>
+                <br>
+                <form action="/api/productos" method="post">
+                    <div class="form-floating mb-3">
+                        <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Title">
+                        <label for="nombre">Title</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="descripcion" class="form-control" type="text" name="descripcion" placeholder="Description">
+                        <label for="descripcion">Description</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="codigo" class="form-control" type="text" name="codigo" placeholder="Code">
+                        <label for="codigo">Code</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="precio" class="form-control" type="number" name="precio" placeholder="Price">
+                        <label for="precio">Price</label>
+                    </div>            
+                    <div class="form-floating mb-3"">
+                        <input id="foto" class="form-control" type="text" name="foto" placeholder="Thumbnail">
+                        <label for="foto">Thumbnail</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input id="stock" class="form-control" type="number" name="stock" placeholder="Stock">
+                        <label for="stock">Stock</label>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary mt-3" id="send"><i class="bi bi-save"></i> Save</button>
+                    </div>
+                </form>
+                <a class="btn btn-info mt-3" href="/"><i class="bi bi-house"></i> Home</a>
+            </div>
+        </div>
+        <script type="module" src="../js/main.js"></script>
+    </body>
+</html>

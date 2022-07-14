@@ -1,50 +1,40 @@
 import express from 'express'
-import { productRouter } from './src/routers/productRouter.js'
-import { createServer } from "http"
-import { Server } from "socket.io"
-import { ContainerArchivo } from './src/api/containerArchivo.js'
+import { productRouter, cartRouter } from './src/routers/index.js'
 
 const app = express()
-const httpServer = createServer(app)
-const io = new Server(httpServer)
-const logChat = new ContainerArchivo('./logChat.txt')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 app.use('/api/productos', productRouter)
+app.use('/api/carrito', cartRouter)
 
-app.set('views', './views');
+app.set('views', './public/views');
 app.set('view engine', 'ejs');
 
-const products = []
-const messages = await logChat.getAll()
-
-io.on('connection', socket => {
-
-    socket.emit('listOfProducts', products)
-    socket.emit('listOfMessages', messages)
-
-    socket.on('addProduct', async data => {
-        await products.push({ title: data.title, price: data.price, thumbnail: data.thumbnail })
-        io.sockets.emit('listOfProducts', products)
-    })
-
-    socket.on('sendMessage', async data => {
-        await messages.push({ email: data.email, message: data.message, timestamp: data.timestamp })
-        await logChat.save({ email: data.email, message: data.message, timestamp: data.timestamp })
-        io.sockets.emit('listOfMessages', messages)
-    })
+app.get('/addProduct', (req, res) => {
+    res.render('./form.ejs')
 })
 
-app.get('/', (req, res) => {
-    res.render('./ejs/index', {products})
+app.get('/listProducts', (req, res) => {
+    res.render('./listProducts.ejs')
 })
+
+app.use((req, res) => {
+    res.json({
+        error: {
+            'name':'Error',
+            'status':404,
+            'message':'Invalid Request',
+            'statusCode':404
+        }
+    });
+});
 
 const PORT = 8080
 
-const server = httpServer.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`listening on http://localhost:${server.address().port}`)
 })
 server.on('error', err => console.log(`Error on server ${err}`))

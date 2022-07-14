@@ -1,0 +1,32 @@
+[
+   {
+      "nombre": "Shure SM58LC",
+      "descripcion": "Frequency response tailored for vocals, with brightened midrange and bass rolloff to control proximity effect.",
+      "codigo": "002",
+      "foto": "https://cdn.shopify.com/s/files/1/0320/1869/4189/products/image_32596c13-11ba-478e-918f-8964d40d183a_1024x1024@2x.png?v=1604630858",
+      "precio": 100,
+      "stock": 7,
+      "id": 2,
+      "timestamp": "7/12/2022 1:54:04 AM"
+   },
+   {
+      "nombre": "JBL Live 460NC",
+      "descripcion": "The JBL Live 460NC wireless headphones feature 40mm drivers and a sound signature that can be found in the most famous venues all around the world.",
+      "codigo": "001",
+      "foto": "https://co.jbl.com/dw/image/v2/AAUJ_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw448a0a5f/JBL_LIVE_460NC_Product%20Image_Hero_Black.png?sw=537&sfrm=png",
+      "precio": 300,
+      "stock": 5,
+      "id": 3,
+      "timestamp": "7/12/2022 1:36:53 PM"
+   },
+   {
+      "nombre": "Bose QuietComfort",
+      "descripcion": "The perfect balance of quiet, comfort, and sound. Bose uses tiny mics to measure, compare, and react to outside noise, cancelling it with opposite signals.",
+      "codigo": "001",
+      "foto": "https://assets.bose.com/content/dam/Bose_DAM/Web/consumer_electronics/global/products/headphones/qc35_ii/product_silo_images/qc35_ii_black_EC_hero.psd/jcr:content/renditions/cq5dam.web.600.600.png",
+      "precio": 280,
+      "stock": 3,
+      "id": 4,
+      "timestamp": "7/12/2022 1:37:58 PM"
+   }
+]

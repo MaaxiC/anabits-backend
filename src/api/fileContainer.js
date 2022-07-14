@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { DATE } from "../utils/index.js";
 
 class ContainerArchivo {
     constructor (fileName){
@@ -22,7 +23,7 @@ class ContainerArchivo {
             const element = array.find(value => value.id === id)
             return element
         } catch (error) {
-            throw new Error({error: 'producto no encontrado'})
+            return error
         }
     }
 
@@ -31,6 +32,7 @@ class ContainerArchivo {
             const array = await this.getAll()
             const newID = array.length === 0 ? 1 : array[array.length - 1].id + 1
             obj.id = newID
+            obj.timestamp = DATE.getTimestamp()
             array.push(obj)
             await fs.promises.writeFile(this.fileName, JSON.stringify(array, null, 3))
             return obj
@@ -39,30 +41,29 @@ class ContainerArchivo {
         }
     }
 
-    async update(id, product) {
+    async update(id, data) {
         try {
-            const array = await this.getAll()
-            array[id - 1] = {
-                title: product.title,
-                price: product.price,
-                thumbnail: product.thumbnail,
-                id: id
-            } //const elementIndex = this.products.findIndex(e => e.id == id)
+            const array = await this.getAll();
+            const elementIndex = array.findIndex((element) => element.id == id)
+            if (elementIndex === -1) return { error: "elemento no encontrado" }
+            array[elementIndex] = { ...array[elementIndex], ...data }
             await fs.promises.writeFile(this.fileName, JSON.stringify(array, null, 3))
-            return array[id - 1]
+            return array[elementIndex]
         } catch (error) {
-            throw new Error({error: 'producto no encontrado'})
+            return error
         }
     }
 
     async deleteById(id) {
         try {
             const array = await this.getAll()
+            const elementIndex = array.findIndex((element) => element.id == id)
+            if (elementIndex === -1) return { error: "elemento no encontrado" }
             const newArray = array.filter(value => value.id != id)
             await fs.promises.writeFile(this.fileName, JSON.stringify(newArray, null, 3))
-            return 'Se elimino el producto'
+            return 'eliminado correctamente'
         } catch (error) {
-            throw new Error({error: 'producto no encontrado'})
+            throw new Error({ error: 'elemento no encontrado' })
         }
     }
 }

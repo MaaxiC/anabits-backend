@@ -20,7 +20,7 @@ class ContainerMemoria {
         return element
     }
 
-    updateById(id, newData) {
+    update(id, newData) {
         const elementIndex = this.elements.findIndex(e => e.id === id)
 
         if (elementIndex === -1) return { error: true }
