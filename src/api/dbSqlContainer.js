@@ -31,15 +31,25 @@ class dbSqlContainer {
     async save(obj) {
         try {
             obj.timestamp = DATE.getTimestamp()
-            await this.config(this.table).insert({
-                nombre: obj.nombre, 
-                descripcion: obj.descripcion, 
-                codigo: obj.codigo, 
-                foto: obj.foto,
-                precio: obj.precio,
-                stock: obj.stock,
-                timestamp: obj.timestamp
-            })
+            if (this.table == 'productos') {
+                await this.config(this.table).insert({
+                    nombre: obj.nombre, 
+                    descripcion: obj.descripcion, 
+                    codigo: obj.codigo, 
+                    foto: obj.foto,
+                    precio: obj.precio,
+                    stock: obj.stock,
+                    timestamp: obj.timestamp
+                })
+            } else if (this.table == 'mensajes') {
+                await this.config(this.table).insert({
+                    email: obj.email, 
+                    message: obj.message, 
+                    timestamp: obj.timestamp
+                })
+            } else {
+                throw new Error({error: 'tabla no existe en la DB'})
+            }
             return obj
         } catch (error) {
             throw new Error({error: 'error al guardar en la DB'})

@@ -32,5 +32,5 @@ const createTableMessages = async (config) => {
     }
 }
 
-//createTableProducts(knex_mariadb)
-createTableMessages(knex_sqlite3)
+createTableProducts(knex_mariadb)
+createTableMessages(knex_mariadb)

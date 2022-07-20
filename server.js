@@ -1,4 +1,6 @@
 import express from 'express'
+import { dbSqlContainer } from './src/api/dbSqlContainer.js'
+import { knex_mariadb } from "./src/options/config.js";
 
 //Routers
 import { productRouter, cartRouter } from './src/routers/index.js'
@@ -6,13 +8,12 @@ import { productRouter, cartRouter } from './src/routers/index.js'
 //Websocket
 import { createServer } from "http"
 import { Server } from "socket.io"
-import { ContainerArchivo } from './src/api/fileContainer.js'
 
 const app = express()
 const httpServer = createServer(app)
 const io = new Server(httpServer)
-const logChat = new ContainerArchivo('./src/data/logChat.json')
-const messages = await logChat.getAll()
+const logChat = new dbSqlContainer(knex_mariadb, 'mensajes')
+
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -24,14 +25,12 @@ app.use('/api/carrito', cartRouter)
 app.set('views', './public/views');
 app.set('view engine', 'ejs');
 
-io.on('connection', socket => {
-    socket.emit('listOfMessages', messages)
+io.on('connection', async socket => {
+    socket.emit('listOfMessages', await logChat.getAll())
 
-    //CAMBIAR PARA GUARDAR EN LA DB
     socket.on('sendMessage', async data => {
-        await messages.push({ email: data.email, message: data.message, timestamp: data.timestamp })
-        await logChat.save({ email: data.email, message: data.message, timestamp: data.timestamp })
-        io.sockets.emit('listOfMessages', messages)
+        await logChat.save(data)
+        io.sockets.emit('listOfMessages', await logChat.getAll())
     })
 })
 
