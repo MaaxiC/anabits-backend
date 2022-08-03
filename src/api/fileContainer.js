@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { DATE } from "../utils/index.js";
 
-class ContainerArchivo {
+class FileContainer {
     constructor (fileName){
         this.fileName  = fileName
     }
@@ -68,4 +68,4 @@ class ContainerArchivo {
     }
 }
 
-export { ContainerArchivo }
+export { FileContainer }

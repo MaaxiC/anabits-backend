@@ -1,5 +1,5 @@
 import express from 'express'
-import { dbSqlContainer } from './src/api/dbSqlContainer.js'
+import { SqldbContainer } from './src/api/sqldbContainer.js'
 import { knex_mariadb } from "./src/options/config.js";
 
 //Routers
@@ -12,7 +12,7 @@ import { Server } from "socket.io"
 const app = express()
 const httpServer = createServer(app)
 const io = new Server(httpServer)
-const logChat = new dbSqlContainer(knex_mariadb, 'mensajes')
+const logChat = new SqldbContainer(knex_mariadb, 'mensajes')
 
 
 app.use(express.json())

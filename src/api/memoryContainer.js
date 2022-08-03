@@ -1,4 +1,4 @@
-class ContainerMemoria {
+class MemoryContainer {
     constructor (){
         this.elements  = []
     }
@@ -44,4 +44,4 @@ class ContainerMemoria {
     }
 }
 
-export { ContainerMemoria }
+export { MemoryContainer }

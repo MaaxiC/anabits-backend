@@ -1,14 +1,16 @@
-import { knex_mariadb, knex_sqlite3 } from "../../src/options/config.js";
+import { knex_mariadb, knex_sqlite3 } from "../src/options/config.js";
 
 const createTableProducts = async (config) => {
     try {
-        await config.schema.createTable('test', table => {
+        await config.schema.dropTableIfExists('productos')
+
+        await config.schema.createTable('productos', table => {
             table.increments('id').primary()
-            table.string('nombre')
+            table.string('nombre').notNullable()
             table.string('descripcion')
             table.string('codigo')
             table.string('foto')
-            table.integer('precio')
+            table.integer('precio').notNullable()
             table.integer('stock')
             table.string('timestamp')
         })
@@ -20,6 +22,8 @@ const createTableProducts = async (config) => {
 
 const createTableMessages = async (config) => {
     try {
+        await config.schema.dropTableIfExists('mensajes')
+
         await config.schema.createTable('mensajes', table => {
             table.increments('id').primary()
             table.string('email')

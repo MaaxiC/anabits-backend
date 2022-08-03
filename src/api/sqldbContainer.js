@@ -1,6 +1,6 @@
 import { DATE } from "../utils/index.js";
 
-class dbSqlContainer {
+class SqldbContainer {
     constructor (config, table){
         this.config  = config
         this.table = table
@@ -31,26 +31,7 @@ class dbSqlContainer {
     async save(obj) {
         try {
             obj.timestamp = DATE.getTimestamp()
-            if (this.table == 'productos') {
-                await this.config(this.table).insert({
-                    nombre: obj.nombre, 
-                    descripcion: obj.descripcion, 
-                    codigo: obj.codigo, 
-                    foto: obj.foto,
-                    precio: obj.precio,
-                    stock: obj.stock,
-                    timestamp: obj.timestamp
-                })
-            } else if (this.table == 'mensajes') {
-                await this.config(this.table).insert({
-                    email: obj.email, 
-                    message: obj.message, 
-                    timestamp: obj.timestamp
-                })
-            } else {
-                throw new Error({error: 'tabla no existe en la DB'})
-            }
-            return obj
+            return this.knex.insert(obj).into(this.table)
         } catch (error) {
             throw new Error({error: 'error al guardar en la DB'})
         }
@@ -58,15 +39,7 @@ class dbSqlContainer {
 
     async update(id, data) {
         try {
-            const row = await this.config(this.table).update({
-                nombre: data.nombre, 
-                descripcion: data.descripcion, 
-                codigo: data.codigo, 
-                foto: data.foto,
-                precio: data.precio,
-                stock: data.stock,
-                timestamp: DATE.getTimestamp()
-            }).where('id', id)
+            const row = this.config.from(this.table).where('id', id).update(data)
             if (row == 1) {
                 return { success: "actualizado correctamente" }
             } else {
@@ -91,4 +64,4 @@ class dbSqlContainer {
     }
 }
 
-export { dbSqlContainer }
+export { SqldbContainer }

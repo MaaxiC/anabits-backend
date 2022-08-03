@@ -1,16 +1,25 @@
 import { Router } from 'express';
-import { ContainerArchivo } from '../api/fileContainer.js'
+import CartFile from '../daos/carts/cartFile.js'
+import CartSqldb from '../daos/carts/cartSqldb.js'
+import CartMongodb from '../daos/carts/cartMongodb.js'
+import ProductFile from '../daos/products/productFile.js'
+import ProductSqldb from '../daos/products/productSqldb.js'
+import ProductMongodb from '../daos/products/productMongodb.js'
 import { ERRORS } from '../utils/index.js'
 
 const cartRouter = Router()
-const cartApi = new ContainerArchivo('./src/data/carts.json')
-const productApi = new ContainerArchivo('./src/data/products.json')
+const cartFile = new CartFile()
+const cartSqldb = new CartSqldb()
+const cartMongodb = new CartMongodb()
+const productFile = new ProductFile()
+const productSql = new ProductSqldb()
+const productMongodb = new ProductMongodb()
 
 const initialCart = { productos: [] }
 
 cartRouter.post("/", async (req, res) => {
     try {
-        const cart = await cartApi.save(initialCart);
+        const cart = await cartFile.save(initialCart);
         res.json({ id: cart.id });
     } catch (error) {
         res.json(error);
@@ -21,7 +30,7 @@ cartRouter.delete('/:id', async (req, res) => {
     try {
         let cartID = parseInt(req.params.id)
         if (!isNaN(cartID)) {
-            const cart = await cartApi.deleteById(cartID)
+            const cart = await cartFile.deleteById(cartID)
             if (cart.error) {
                 res.json({ error: ERRORS.MESSAGES.NO_CART })
             } else {
@@ -39,7 +48,7 @@ cartRouter.get('/:id/productos', async (req, res) => {
     try {
         const cartID = parseInt(req.params.id)
         if (!isNaN(cartID)) {
-            const cart = await cartApi.getById(cartID)
+            const cart = await cartFile.getById(cartID)
             if (!cart) {
                 res.json({ error: ERRORS.MESSAGES.NO_CART })
             } else {
@@ -58,16 +67,16 @@ cartRouter.post('/:id/productos', async (req, res) => {
         const id = parseInt(req.params.id)
         const productID = parseInt(req.body.id_prod)
         if (!isNaN(id)) {
-            const cart = await cartApi.getById(id)
+            const cart = await cartFile.getById(id)
             if (!cart) {
                 res.json({ error: ERRORS.MESSAGES.NO_CART })
             } else {
-                const product = await productApi.getById(productID)
+                const product = await productFile.getById(productID)
                 if (!product) {
                     res.json({ error: ERRORS.MESSAGES.NO_PRODUCT })
                 } else {
                     cart.productos.push(product)
-                    const updatedCart = await cartApi.update(id, cart)
+                    const updatedCart = await cartFile.update(id, cart)
                     res.json(updatedCart)
                 }
             }
@@ -84,7 +93,7 @@ cartRouter.delete('/:id/productos/:id_prod', async (req, res) => {
         let cartID = parseInt(req.params.id)
         let productID = parseInt(req.params.id_prod)
         if (!isNaN(cartID) && !isNaN(productID)) {
-            const cart = await cartApi.getById(cartID)
+            const cart = await cartFile.getById(cartID)
             if (!cart) {
                 res.json({ error: ERRORS.MESSAGES.NO_CART })
             } else {
@@ -93,7 +102,7 @@ cartRouter.delete('/:id/productos/:id_prod', async (req, res) => {
                     res.json({ error: ERRORS.MESSAGES.NO_PRODUCT })
                 } else {
                     const newArray = cart.productos.filter(product => product.id != productID)
-                    const cartUpdated = await cartApi.update(cartID, { productos: newArray })
+                    const cartUpdated = await cartFile.update(cartID, { productos: newArray })
                     if (cartUpdated.error) {
                         res.json({ error: ERRORS.MESSAGES.NO_CART })
                     } else {
