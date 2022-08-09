@@ -1,0 +1,31 @@
+[
+   {
+      "productos": [],
+      "nombre": "PreSonus Eris E3.5",
+      "id": 1,
+      "timestamp": "8/8/2022 6:04:29 PM"
+   },
+   {
+      "productos": [
+         {
+            "nombre": "PreSonus Eris E3.5",
+            "descripcion": "The only true studio monitor for multimedia, gaming, watching movies, or producing your next hit.",
+            "codigo": "004",
+            "foto": "https://sc1.musik-produktiv.com/pic-010125741xl/presonus-eris-e3-5-bt.jpg",
+            "precio": 900,
+            "stock": 2,
+            "id": 1,
+            "timestamp": "8/8/2022 5:55:28 PM"
+         }
+      ],
+      "nombre": "PreSonus Eris E3.5",
+      "id": 2,
+      "timestamp": "8/8/2022 6:04:32 PM"
+   },
+   {
+      "productos": [],
+      "nombre": "PreSonus Eris E3.5",
+      "id": 3,
+      "timestamp": "8/8/2022 6:04:37 PM"
+   }
+]

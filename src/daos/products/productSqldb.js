@@ -1,10 +1,11 @@
-import { SqldbContainer } from '../../api/sqldbContainer.js'
-import { knex_mariadb } from '../../options/config.js'
+import knex from 'knex'
+import { SqldbContainer } from '../../api/index.js'
+import { config } from '../../config/index.js'
 
 class ProductSqldb extends SqldbContainer {
     constructor() {
-        super(knex_mariadb, 'productos')
+        super(knex(config.SQL_DB), config.DB.products)
     }
 }
 
-export default ProductSqldb
+export { ProductSqldb }

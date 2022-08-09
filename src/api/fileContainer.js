@@ -3,7 +3,7 @@ import { DATE } from "../utils/index.js";
 
 class FileContainer {
     constructor (fileName){
-        this.fileName  = fileName
+        this.fileName  = `./src/db/filesystem/${fileName}.json`
     }
 
     async getAll() {
@@ -11,16 +11,15 @@ class FileContainer {
             const array = await fs.promises.readFile(this.fileName, 'utf8')
             return JSON.parse(array)
         } catch (error) {
-            const array = []
-            await fs.promises.writeFile(this.fileName, JSON.stringify(array))
-            return array
+            await fs.promises.writeFile(this.fileName, JSON.stringify([]))
+            return []
         }
     }
 
     async getById(id) {
         try {
             const array = await this.getAll()
-            const element = array.find(value => value.id === id)
+            const element = array.find(value => value.id == id)
             return element
         } catch (error) {
             return error

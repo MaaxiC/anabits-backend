@@ -1,9 +1,10 @@
-import { FileContainer } from '../../api/fileContainer.js'
+import { FileContainer } from '../../api/index.js'
+import { config } from '../../config/index.js'
 
 class ProductFile extends FileContainer {
     constructor() {
-        super('../../data/products.json')
+        super(config.DB.products)
     }
 }
 
-export default ProductFile
+export { ProductFile }

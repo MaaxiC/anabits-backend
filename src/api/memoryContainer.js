@@ -21,7 +21,7 @@ class MemoryContainer {
     }
 
     update(id, newData) {
-        const elementIndex = this.elements.findIndex(e => e.id === id)
+        const elementIndex = this.elements.findIndex(e => e.id == id)
 
         if (elementIndex === -1) return { error: true }
 
@@ -34,7 +34,7 @@ class MemoryContainer {
     }
 
     deleteById(id) {
-        const elementIndex = this.elements.findIndex(e => e.id === id)
+        const elementIndex = this.elements.findIndex(e => e.id == id)
 
         if (elementIndex === -1) return { error: true }
 

@@ -1,9 +1,10 @@
-import { FileContainer } from '../../api/fileContainer.js'
+import { FileContainer } from '../../api/index.js'
+import { config } from '../../config/index.js'
 
 class CartFile extends FileContainer {
     constructor() {
-        super('../../data/carts.json')
+        super(config.DB.carts)
     }
 }
 
-export default CartFile
+export { CartFile }

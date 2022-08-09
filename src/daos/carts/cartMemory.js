@@ -1,4 +1,4 @@
-import { MemoryContainer } from '../../api/memoryContainer.js'
+import { MemoryContainer } from '../../api/index.js'
 
 class CartMemory extends MemoryContainer {
     constructor() {
@@ -6,4 +6,4 @@ class CartMemory extends MemoryContainer {
     }
 }
 
-export default CartMemory
+export { CartMemory }

@@ -1,10 +1,11 @@
-import { MongodbContainer } from '../../api/mongodbContainer.js'
-import CartSchema from '../../schemas/CartSchema.js'
+import { MongodbContainer } from '../../api/index.js'
+import { config } from '../../config/index.js'
+import { CartSchema } from '../../models/index.js'
 
 class CartMongodb extends MongodbContainer {
     constructor() {
-        super('carritos', CartSchema)
+        super({ collection: config.DB.carts, schema: CartSchema })
     }
 }
 
-export default CartMongodb
+export { CartMongodb }

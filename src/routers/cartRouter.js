@@ -1,84 +1,97 @@
 import { Router } from 'express';
-import CartFile from '../daos/carts/cartFile.js'
-import CartSqldb from '../daos/carts/cartSqldb.js'
-import CartMongodb from '../daos/carts/cartMongodb.js'
-import ProductFile from '../daos/products/productFile.js'
-import ProductSqldb from '../daos/products/productSqldb.js'
-import ProductMongodb from '../daos/products/productMongodb.js'
+import { ProductDao, CartDao } from "../daos/index.js"
 import { ERRORS } from '../utils/index.js'
 
 const cartRouter = Router()
-const cartFile = new CartFile()
-const cartSqldb = new CartSqldb()
-const cartMongodb = new CartMongodb()
-const productFile = new ProductFile()
-const productSql = new ProductSqldb()
-const productMongodb = new ProductMongodb()
 
-const initialCart = { productos: [] }
+const CartApi = CartDao
+const ProductApi = ProductDao
+
+const initialCart = { productos: [], }
 
 cartRouter.post("/", async (req, res) => {
     try {
-        //const cart = await cartFile.save(initialCart)
-        const cart = await cartMongodb.save(initialCart)
-        res.json({ id: cart._id })
+        const { nombre } = req.body
+        const cart = await CartApi.save({
+            ...initialCart,
+            nombre: nombre ?? "carritoPrueba",
+        });
+        const cartId = cart.id
+        res.send({ id: cartId })
     } catch (error) {
-        res.json(error)
+        res.send(error)
     }
 })
 
 cartRouter.delete('/:id', async (req, res) => {
     try {
-        let cartID = req.params.id
-        //const cart = await cartFile.deleteById(cartID)
-        const cart = await cartMongodb.deleteById(cartID)
-        if (cart.error) {
-            res.json({ error: ERRORS.MESSAGES.NO_CART })
+        const cartID = req.params.id
+        const cart = await CartApi.deleteById(cartID)
+        if (cart.error || cart.kind) {
+            res.send({ error: ERRORS.MESSAGES.NO_CART })
         } else {
-            res.json({ success: 'carrito eliminado correctamente' })
+            res.send({ success: 'carrito eliminado correctamente' })
         }
     } catch (error) {
-        res.json(error)
+        res.send(error)
     }
 })
 
 cartRouter.get('/:id/productos', async (req, res) => {
     try {
         const cartID = req.params.id
-        //const cart = await cartFile.getById(cartID)
-        const cart = await cartMongodb.getById(cartID)
-        if (!cart) {
-            res.json({ error: ERRORS.MESSAGES.NO_CART })
+        const cart = await CartApi.getById(cartID)
+        if (!cart || cart.kind) {
+            res.send({ error: ERRORS.MESSAGES.NO_CART })
         } else {
-            res.json(cart)
+            res.send(cart)
         }
     } catch (error) {
-        res.json(error)
+        res.send(error)
     }
 })
 
 cartRouter.post('/:id/productos', async (req, res) => {
     try {
         const id = req.params.id
-        const productID = req.body._id
-        const cart = await cartMongodb.getById(id)
-        if (!cart) {
-            res.json({ error: ERRORS.MESSAGES.NO_CART })
+        const productID = req.body.productId
+        const cart = await CartApi.getById(id)
+        if (!cart || cart.kind) {
+            res.send({ error: ERRORS.MESSAGES.NO_CART })
         } else {
-            const product = await productMongodb.getById(productID)
-            if (!product) {
-                res.json({ error: ERRORS.MESSAGES.NO_PRODUCT })
+            const product = await ProductApi.getById(productID)
+            if (!product || product.kind) {
+                res.send({ error: ERRORS.MESSAGES.NO_PRODUCT })
             } else {
-                const newProduct = product[0]
-                const {_id, nombre, descripcion, codigo, foto, precio} = newProduct
-                const newCart = cart[0]
-                newCart.productos.push({_id, nombre, descripcion, codigo, foto, precio})
-                const updatedCart = await cartMongodb.update(id, newCart)
-                res.json(updatedCart)
+                cart.productos.push(product)
+                const updatedCart = await CartApi.update(id, cart)
+                res.send(updatedCart)
             }
         }
     } catch (error) {
-        res.json(error)
+        res.send(error)
+    }
+})
+
+cartRouter.put("/:id/productos", async (req, res) => {
+    try {
+        const id = req.params.id
+        const productID = req.body.productId
+        const cart = await CartApi.getById(id)
+        const product = await ProductApi.getById(productID)
+        if (!cart || cart.kind) {
+            res.send({ error: ERRORS.MESSAGES.NO_CART })
+        } else { 
+            if (!product || product.kind) {
+                res.send({ error: ERRORS.MESSAGES.NO_PRODUCT })
+            } else {
+                cart.productos = cart.productos.filter((product) => product.id != productID)
+                const updatedCart = await CartApi.update(id, cart)
+                res.send(updatedCart)
+            }
+        }
+    } catch (error) {
+        res.send(error)
     }
 })
 
@@ -86,26 +99,28 @@ cartRouter.delete('/:id/productos/:id_prod', async (req, res) => {
     try {
         const cartID = req.params.id
         const productID = req.params.id_prod
-        const cart = await cartMongodb.getById(cartID)
-        if (!cart) {
-            res.json({ error: ERRORS.MESSAGES.NO_CART })
+        const cart = await CartApi.getById(cartID)
+        if (!cart || cart.kind) {
+            res.send({ error: ERRORS.MESSAGES.NO_CART })
         } else {
-            const newCart = cart[0]
-            const exist = newCart.productos.find(product => product._id == productID)
+            const newCart = cart.productos
+            const exist = newCart.find(product => product.id == productID)
             if (!exist) {
-                res.json({ error: ERRORS.MESSAGES.NO_PRODUCT })
+                res.send({ error: ERRORS.MESSAGES.NO_PRODUCT })
             } else {
-                const newArray = newCart.productos.filter(product => product._id != productID)
-                const cartUpdated = await cartMongodb.update(cartID, { productos: newArray })
-                if (cartUpdated.error) {
-                    res.json({ error: ERRORS.MESSAGES.NO_CART })
+                const newArray = newCart.filter(product => product.id != productID)
+                cart.productos = newArray
+                const cartUpdated = await CartApi.update(cartID, cart)
+                console.log(cartUpdated)
+                if (!cartUpdated || cartUpdated.kind) {
+                    res.send({ error: 'error al borrar el producto' })
                 } else {
-                    res.json({ success: 'producto eliminado correctamente' })
+                    res.send({ success: 'producto eliminado correctamente' })
                 }
             }
         }
     } catch (error) {
-        res.json(error)
+        res.send(error)
     }
 })
 
