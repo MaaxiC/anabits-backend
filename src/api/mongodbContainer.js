@@ -8,7 +8,7 @@ class MongodbContainer {
 
     async getAll() {
         try {
-            let rows = await this.collection.find({})
+            const rows = await this.collection.find({})
             return rows
         } catch (error) {
             return error

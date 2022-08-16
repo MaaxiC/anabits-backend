@@ -8,7 +8,7 @@ class SqldbContainer {
 
     async getAll() {
         try {
-            let rows = await this.config.from(this.table).select('*')
+            const rows = await this.config.from(this.table).select('*')
             return rows
         } catch (error) {
             return []

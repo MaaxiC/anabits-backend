@@ -1,14 +1,17 @@
 import { config } from "../config/index.js"
-import { ProductFile, ProductMemory, ProductMongodb, ProductSqldb } from "./products/index.js"
-import { CartFile, CartMemory, CartMongodb, CartSqldb } from "./carts/index.js"
-//import ProductFirebase from './products/productFirebase.js'
-//import CartFirebase from './carts/cartFirebase.js'
+import { ProductFile, ProductMemory, ProductMongodb, ProductSqldb, ProductFirebase } from "./products/index.js"
+import { CartFile, CartMemory, CartMongodb, CartSqldb, CartFirebase } from "./carts/index.js"
 
 const getDaosBySelectedDB = ({ selectedPersistence }) => {
     switch (selectedPersistence) {
       case config.persistences.mongodb: {
         const ProductDao = new ProductMongodb()
         const CartDao = new CartMongodb()
+        return { ProductDao, CartDao }
+      }
+      case config.persistences.firebase: {
+        const ProductDao = new ProductFirebase()
+        const CartDao = new CartFirebase()
         return { ProductDao, CartDao }
       }
       case config.persistences.filesystem: {

@@ -2,7 +2,7 @@ import express from 'express'
 import knex from 'knex'
 import { config } from "./config/index.js"
 import { SqldbContainer } from './api/sqldbContainer.js'
-import { MongodbService } from "./services/index.js";
+import { MongodbService } from "./services/index.js"
 
 //Routers
 import { productRouter, cartRouter } from './routers/index.js'
@@ -24,7 +24,7 @@ app.use(express.static('public'))
 app.use(config.server.routes.products, productRouter)
 app.use(config.server.routes.carts, cartRouter)
 
-app.set('views', '../public/views');
+app.set('views', './public/views');
 app.set('view engine', 'ejs');
 
 io.on('connection', async socket => {
@@ -59,7 +59,7 @@ app.use((req, res) => {
     });
 });
 
-MongodbService.init();
+MongodbService.init()
 
 const server = httpServer.listen(config.server.PORT, () => {
     console.log(`listening on http://localhost:${server.address().port}`)
