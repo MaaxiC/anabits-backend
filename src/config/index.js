@@ -16,6 +16,7 @@ const config = {
   DB: {
     products: "productos",
     carts: "carritos",
+    messages: "mensajes"
   },
   MONGO_DB: {
     URL: process.env.Mongo_URL,
@@ -38,6 +39,7 @@ const config = {
       base: "/api",
       products: "/api/productos",
       carts: "/api/carrito",
+      productsTest: "/api/productos-test",
     },
   },
 };

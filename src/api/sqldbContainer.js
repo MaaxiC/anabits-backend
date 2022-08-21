@@ -18,11 +18,8 @@ class SqldbContainer {
     async getById(id) {
          try {
             const row = await this.config(this.table).select('*').where('id', id)
-            if (row.length > 0) {
-                return row
-            } else {
-                return undefined 
-            }
+            if (row.length = 0) { return undefined }
+            return row
          } catch (error) {
             return error
          }
@@ -40,11 +37,8 @@ class SqldbContainer {
     async update(id, data) {
         try {
             const row = this.config.from(this.table).where('id', id).update(data)
-            if (row == 1) {
-                return { success: "actualizado correctamente" }
-            } else {
-                return { error: "elemento no encontrado" }
-            }
+            if (row != 1) { return { error: "elemento no encontrado" } } 
+            return { success: "actualizado correctamente" }
         } catch (error) {
             return error
         }
@@ -53,11 +47,8 @@ class SqldbContainer {
     async deleteById(id) {
         try {
             const row = await this.config(this.table).where({ id: id }).del()
-            if (row == 1) {
-                return { success: "eliminado correctamente" }
-            } else {
-                return { error: "elemento no encontrado" }
-            }
+            if (row != 1) { return { error: "elemento no encontrado" } }
+            return { success: "eliminado correctamente" }
         } catch (error) {
             return error
         }
