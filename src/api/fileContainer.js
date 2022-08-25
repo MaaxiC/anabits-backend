@@ -1,9 +1,10 @@
 import fs from 'fs'
-import { DATE } from "../utils/index.js";
+import { DATE } from "../utils/index.js"
+import { __dirname } from '../utils.js'
 
 class FileContainer {
     constructor (fileName){
-        this.fileName  = `./src/db/filesystem/${fileName}.json`
+        this.fileName  = `${__dirname}/db/filesystem/${fileName}.json`
     }
 
     async getAll() {

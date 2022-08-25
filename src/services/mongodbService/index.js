@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 import { config } from "../../config/index.js"
 
 const init = async () => {
@@ -8,7 +8,7 @@ const init = async () => {
       dbName: config.MONGO_DB.DB_NAME,
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    });
+    })
     console.log("Connection with mongodb established")
   } catch (error) {
     console.error(error)

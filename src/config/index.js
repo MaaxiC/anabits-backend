@@ -16,7 +16,8 @@ const config = {
   DB: {
     products: "productos",
     carts: "carritos",
-    messages: "mensajes"
+    messages: "mensajes",
+    users: "usuarios"
   },
   MONGO_DB: {
     URL: process.env.Mongo_URL,
@@ -40,6 +41,7 @@ const config = {
       products: "/api/productos",
       carts: "/api/carrito",
       productsTest: "/api/productos-test",
+      sessions: '/api/sessions'
     },
   },
 };

@@ -7,7 +7,7 @@ const MessageCollection = config.DB.messages
 
 const MessageSchema = new Schema({
     author: {
-        id: { type: String, required: true, max: 100 },
+        email: { type: String, required: true, max: 100 },
         nombre: { type: String, required: true, max: 100 },
         apellido: { type: String, required: true, max: 100 },
         edad: { type: Number, required: true, max: 100 },

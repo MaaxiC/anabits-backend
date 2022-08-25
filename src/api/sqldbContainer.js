@@ -1,4 +1,4 @@
-import { DATE } from "../utils/index.js";
+import { DATE } from "../utils/index.js"
 
 class SqldbContainer {
     constructor (config, table){

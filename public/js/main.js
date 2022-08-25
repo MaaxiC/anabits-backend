@@ -4,6 +4,7 @@ import { utils } from "./utils.js"
 //Products
 const productsContainer = document.getElementById("productsContainer")
 const chatContainer = document.getElementById("chatContainer")
+const logoutBtn = document.getElementById("logoutBtn")
 
 const getProducts = async () => {
     const products = await API_ROUTES.getProducts()
@@ -34,7 +35,7 @@ if (chatContainer) {
         const timestamp = (new Date).toLocaleString()
         const chatMessage = {
             author: { 
-                id: email,
+                email: email,
                 nombre: nombre,
                 apellido: apellido,
                 edad: edad,
@@ -49,9 +50,15 @@ if (chatContainer) {
     })
     
     const getMessages = listOfMessages => {
-        const chat = listOfMessages.map( msg => `<b style="color:blue">${msg.author.id}</b> - <n style="color:brown">${msg.timestamp}</n> : <i style="color:green">${msg.text}</i>`).join('<br>')
+        const chat = listOfMessages.map( msg => `<b style="color:blue">${msg.author.email}</b> - <n style="color:brown">${msg.timestamp}</n> : <i style="color:green">${msg.text}</i>`).join('<br>')
         document.getElementById('chat').innerHTML = chat
     }
 }
 
-
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+        fetch('/api/sessions/logout')
+        .then(result => result.json())
+        .then(data => data.error == 'error' ? console.log(data) : window.location.replace('/login'))
+    })
+}

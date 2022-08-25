@@ -1,12 +1,15 @@
 import express from 'express'
+import { normalize, schema } from 'normalizr'
 import { config } from "./config/index.js"
 import { MongodbService } from "./services/index.js"
 import { MessageDao } from "./daos/index.js"
 import { JOI_VALIDATOR } from './utils/index.js'
-import { normalize, schema } from 'normalizr'
+import { __dirname } from './utils.js'
+import MongoStore from "connect-mongo"
+import session from "express-session"
 
 //Routers
-import { productRouter, cartRouter, productTestRouter } from './routers/index.js'
+import { productRouter, cartRouter, productTestRouter, viewsRouter, sessionRouter } from './routers/index.js'
 
 //Websocket
 import { createServer } from "http"
@@ -16,7 +19,7 @@ const app = express()
 const httpServer = createServer(app)
 const io = new Server(httpServer)
 const MessageApi = MessageDao
-const authorSchema = new schema.Entity('authors')
+const authorSchema = new schema.Entity('authors', {}, {idAttribute: 'email'})
 const messageSchema = new schema.Entity('messages', { 
     author: authorSchema
 })
@@ -28,23 +31,19 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
-app.use(config.server.routes.products, productRouter)
-app.use(config.server.routes.carts, cartRouter)
-app.use(config.server.routes.productsTest, productTestRouter)
-
-app.set('views', './public/views');
-app.set('view engine', 'ejs');
+app.set('views', __dirname+'/views')
+app.set('view engine', 'ejs')
 
 //Messages
 io.on('connection', async socket => {
     socket.emit('listOfMessages', await MessageApi.getAll())
     socket.on('sendMessage', async data => {
         try {
-            const { id, nombre, apellido, edad, alias, avatar } = data.author
+            const { email, nombre, apellido, edad, alias, avatar } = data.author
             const { text, timestamp } = data
             const message = await JOI_VALIDATOR.message.validateAsync({
                 author: { 
-                    id,
+                    email,
                     nombre,
                     apellido,
                     edad,
@@ -52,14 +51,14 @@ io.on('connection', async socket => {
                     avatar,
                 },
                 text,
-                timestamp,
             })
+            message.timestamp = timestamp
             await MessageApi.save(message)
             const getMessages = await MessageApi.getAll()
             const getList = getMessages.map( message => ({
                 id: message._id,
                 author: { 
-                    id: message.author.id,
+                    email: message.author.email,
                     nombre: message.author.nombre,
                     apellido: message.author.apellido,
                     edad: message.author.edad,
@@ -83,32 +82,39 @@ io.on('connection', async socket => {
     })
 })
 
-app.get('/addProduct', (req, res) => {
-    res.render('./form.ejs')
-})
-
-app.get('/listProducts', (req, res) => {
-    res.render('./listProducts.ejs')
-})
-
-app.get('/chat', (req, res) => {
-    res.render('./chat.ejs')
-})
-
-app.use((req, res) => {
-    res.json({
-        error: {
-            'name': 'Error',
-            'status': 404,
-            'message': 'Invalid Request',
-            'statusCode': 404
-        }
-    });
-});
-
 MongodbService.init()
 
 const server = httpServer.listen(config.server.PORT, () => {
     console.log(`listening on http://localhost:${server.address().port}`)
 })
 server.on('error', err => console.log(`Error on server ${err}`))
+
+app.use(session({ 
+    store: MongoStore.create({
+        mongoUrl: config.MONGO_DB.URL,
+        mongoOptions: {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        },
+        ttl: 600
+    }),
+    secret: 'secretKeyAnabitsBackEnd',
+    resave: false,
+    saveUninitialized: false,
+}))
+
+app.use('/', viewsRouter)
+app.use(config.server.routes.products, productRouter)
+app.use(config.server.routes.carts, cartRouter)
+app.use(config.server.routes.productsTest, productTestRouter)
+app.use(config.server.routes.sessions, sessionRouter)
+app.use((req, res) => {
+    res.send({
+        error: {
+            'name': 'Error',
+            'status': 404,
+            'message': 'Invalid Request',
+            'statusCode': 404
+        }
+    })
+})

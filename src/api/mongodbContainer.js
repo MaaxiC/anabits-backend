@@ -1,5 +1,5 @@
-import { DATE } from "../utils/index.js";
-import mongoose from "mongoose";
+import { DATE } from "../utils/index.js"
+import mongoose from "mongoose"
 
 class MongodbContainer {
     constructor ({ collection, schema }){

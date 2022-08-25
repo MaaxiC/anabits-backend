@@ -8,5 +8,25 @@
       "stock": 2,
       "id": 1,
       "timestamp": "8/8/2022 5:55:28 PM"
+   },
+   {
+      "nombre": "Denon DJ PRIME 2",
+      "descripcion": "The only true studio monitor for multimedia, gaming, watching movies, or producing your next hit.",
+      "codigo": " 005",
+      "foto": "https://images.musicstore.de/images/0960/denon-dj-prime-2_1_DJE0007379-000.jpg",
+      "precio": 110,
+      "stock": 5,
+      "id": 2,
+      "timestamp": "8/24/2022 10:46:16 AM"
+   },
+   {
+      "nombre": "JBL Live 460NC",
+      "descripcion": "The JBL Live 460NC wireless headphones feature 40mm drivers and a sound signature that can be found in the most famous venues all around the world.",
+      "codigo": "A20",
+      "foto": "https://co.jbl.com/dw/image/v2/AAUJ_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/dw448a0a5f/JBL_LIVE_460NC_Product%20Image_Hero_Black.png?sw=537&sfrm=png",
+      "precio": 80,
+      "stock": 4,
+      "id": 3,
+      "timestamp": "8/24/2022 10:49:29 AM"
    }
 ]

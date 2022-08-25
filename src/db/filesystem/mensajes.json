@@ -1,15 +1,15 @@
 [
    {
       "author": {
-         "id": "maaxi.c@gmail.com",
+         "email": "maaxi.c@gmail.com",
          "nombre": "Maximiliano",
          "apellido": "Carnero",
-         "edad": "26",
+         "edad": 26,
          "alias": "Maxi",
          "avatar": "https://cdn.iconscout.com/icon/free/png-256/javascript-2752148-2284965.png"
       },
       "text": "Hola!",
-      "timestamp": "8/21/2022 1:44:52 PM",
+      "timestamp": "8/24/2022 10:51:41 AM",
       "id": 1
    }
 ]

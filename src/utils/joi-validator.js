@@ -11,7 +11,7 @@ const product = joi.object({
 
 const message = joi.object({
   author: {
-    id: joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com'] } }),
+    email: joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com'] } }),
     nombre: joi.string().min(2).max(100).required(),
     apellido: joi.string().min(2).max(100).required(),
     edad: joi.number().min(16).max(100).required(),
@@ -19,10 +19,20 @@ const message = joi.object({
     avatar: joi.string().min(13).max(100).required(),
   },
   text: joi.string().min(1).max(100).required(),
-  timestamp: joi.string().required(),
+})
+
+const user = joi.object({
+  nombre: joi.string().min(2).max(100).required(),
+  apellido: joi.string().min(2).max(100).required(),
+  email: joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com'] } }),
+  contrasena: joi.string().min(2).max(100).required(),
+  alias: joi.string().min(2).max(100).required(),
+  avatar: joi.string().min(13).max(100).required(),
+  edad: joi.number().min(16).max(100).required(),
 })
 
 export const JOI_VALIDATOR = {
   product,
   message,
+  user
 }
