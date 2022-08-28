@@ -9,7 +9,7 @@ const UserSchema = new Schema({
     nombre: { type: String, required: true, max: 100 },
     apellido: { type: String, required: true, max: 100 },
     email: { type: String, required: true, max: 100 },
-    contrasena: { type: String, required: true, max: 100 },
+    password: { type: String, required: true, max: 100 },
     alias: { type: String, required: true, max: 100 },
     avatar: { type: String, required: true, max: 300 },
     edad: { type: Number, required: true,  },

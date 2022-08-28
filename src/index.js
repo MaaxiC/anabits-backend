@@ -7,6 +7,9 @@ import { JOI_VALIDATOR } from './utils/index.js'
 import { __dirname } from './utils.js'
 import MongoStore from "connect-mongo"
 import session from "express-session"
+import path from 'path'
+import passport from 'passport'
+import { initializePassport } from './config/passport.js'
 
 //Routers
 import { productRouter, cartRouter, productTestRouter, viewsRouter, sessionRouter } from './routers/index.js'
@@ -31,7 +34,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
-app.set('views', __dirname+'/views')
+app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'ejs')
 
 //Messages
@@ -102,6 +105,10 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }))
+
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use('/', viewsRouter)
 app.use(config.server.routes.products, productRouter)

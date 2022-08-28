@@ -25,7 +25,7 @@ const user = joi.object({
   nombre: joi.string().min(2).max(100).required(),
   apellido: joi.string().min(2).max(100).required(),
   email: joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com'] } }),
-  contrasena: joi.string().min(2).max(100).required(),
+  password: joi.string().min(2).max(100).required(),
   alias: joi.string().min(2).max(100).required(),
   avatar: joi.string().min(13).max(100).required(),
   edad: joi.number().min(16).max(100).required(),
