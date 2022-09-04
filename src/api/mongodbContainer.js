@@ -7,31 +7,20 @@ class MongodbContainer {
     }
 
     async getAll() {
-        try {
-            const rows = await this.collection.find({})
-            return rows
-        } catch (error) {
-            return error
-        }
+        return await this.collection.find({})
     }
 
     async getById(id) {
-         try {
-            const row = await this.collection.findById(id) 
-            return row
-         } catch (error) {
-            return error
-         }
-    }
-
-    async save(obj) {
         try {
-            obj.timestamp = DATE.getTimestamp()
-            const row = await this.collection.create(obj)
-            return row
+            return await this.collection.findById(id) 
         } catch (error) {
             return error
         }
+    }
+
+    async save(obj) {
+        obj.timestamp = DATE.getTimestamp()
+        return await this.collection.create(obj)
     }
 
     async update(id, data) {

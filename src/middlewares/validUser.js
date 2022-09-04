@@ -19,6 +19,3 @@ const validUser = async (req, res, next) => {
 }
 
 export { validUser }
-
-
-        

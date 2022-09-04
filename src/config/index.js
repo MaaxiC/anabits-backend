@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config();
+import dotenv from "dotenv"
+dotenv.config()
 
 const DEV_PORT = 8080;
 
@@ -20,7 +20,7 @@ const config = {
     users: "usuarios"
   },
   MONGO_DB: {
-    URL: process.env.Mongo_URL,
+    URL: process.env.MONGO_URL,
     DB_NAME: process.env.MONGO_DB_NAME,
   },
   SQL_DB: {
@@ -41,7 +41,8 @@ const config = {
       products: "/api/productos",
       carts: "/api/carrito",
       productsTest: "/api/productos-test",
-      sessions: '/api/sessions'
+      sessions: '/api/sessions',
+      info: "/info" 
     },
   },
 };

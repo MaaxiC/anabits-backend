@@ -4,13 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Add Product</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+        <%- include('../partials/head') %>
     </head>
     <body>
         <div class="container mt-5 mb-5 d-flex justify-content-center">
             <div class="card p-3" style="background-color:coral; width:500px;" >
-                <h1 class="text-center">Enter the product</h1>
+                <h2 class="text-center">Enter the product</h2>
                 <br>
                 <form action="/api/productos" method="post">
                     <div class="form-floating mb-3">
@@ -29,7 +28,7 @@
                         <input id="precio" class="form-control" type="number" name="precio" placeholder="Price">
                         <label for="precio">Price</label>
                     </div>            
-                    <div class="form-floating mb-3"">
+                    <div class="form-floating mb-3">
                         <input id="foto" class="form-control" type="text" name="foto" placeholder="Thumbnail">
                         <label for="foto">Thumbnail</label>
                     </div>

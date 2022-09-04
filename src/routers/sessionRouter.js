@@ -1,6 +1,4 @@
 import { Router } from 'express'
-import { UserModel } from "../models/index.js"
-import { createHash } from '../utils.js'
 import { validUser } from '../middlewares/validUser.js'
 import passport from 'passport'
 

@@ -7,12 +7,12 @@ import { JOI_VALIDATOR } from './utils/index.js'
 import { __dirname } from './utils.js'
 import MongoStore from "connect-mongo"
 import session from "express-session"
-import path from 'path'
+import { join } from 'path'
 import passport from 'passport'
 import { initializePassport } from './config/passport.js'
 
 //Routers
-import { productRouter, cartRouter, productTestRouter, viewsRouter, sessionRouter } from './routers/index.js'
+import { productRouter, cartRouter, productTestRouter, viewsRouter, sessionRouter, infoRouter } from './routers/index.js'
 
 //Websocket
 import { createServer } from "http"
@@ -32,9 +32,9 @@ const chatSchema = new schema.Entity('chats', {
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public'))
+app.use(express.static(join(__dirname, 'public')))
 
-app.set('views', path.join(__dirname, '/views'))
+app.set('views', join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
 //Messages
@@ -115,6 +115,7 @@ app.use(config.server.routes.products, productRouter)
 app.use(config.server.routes.carts, cartRouter)
 app.use(config.server.routes.productsTest, productTestRouter)
 app.use(config.server.routes.sessions, sessionRouter)
+app.use(config.server.routes.info, infoRouter)
 app.use((req, res) => {
     res.send({
         error: {

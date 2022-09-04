@@ -10,10 +10,6 @@ const initializePassport = () => {
     passport.use('register', new LocalStrategy({ passReqToCallback: true, usernameField: 'email' }, async (req, email, password, done) => {
         try {
             const { nombre, apellido, alias, avatar, edad } = req.body
-            // if (!email || !password) {
-            //     console.log({ status: 'error', error: 'complete todos los campos' })
-            //     return done(null, false)
-            // }
             const exists = await UserModel.findOne({ email: email })
             if (exists) {
                 console.log({ status: 'error', error: 'el usuario ya se encuentra registrado' })
