@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { __dirname } from '../utils.js'
+import { Admin } from "../middlewares/index.js"
 
 const viewsRouter = Router();
 
@@ -8,7 +9,7 @@ viewsRouter.get('/', (req, res) => {
     res.render('index.ejs', { user: req.session.user })
 })
 
-viewsRouter.get('/addProduct', (req, res) => {
+viewsRouter.get('/addProduct', Admin, (req, res) => {
     if(!req.session.user) return res.redirect('/login')
     res.render('pages/form.ejs')
 })

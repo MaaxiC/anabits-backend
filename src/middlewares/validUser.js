@@ -3,7 +3,7 @@ import { JOI_VALIDATOR } from '../utils/index.js'
 const validUser = async (req, res, next) => {
     try {
         const { nombre, apellido, email, password, alias, avatar, edad } = req.body
-        const user = await JOI_VALIDATOR.user.validateAsync({
+        await JOI_VALIDATOR.user.validateAsync({
             nombre, 
             apellido, 
             email, 
@@ -14,7 +14,7 @@ const validUser = async (req, res, next) => {
         })
         next()
     } catch (error) {
-        res.send({ status: 'error', error: 'verifique los datos cargados y vuelva a intentarlo' })
+        res.status(400).send({ status: 'error', error: 'verifique los datos cargados y vuelva a intentarlo' })
     }
 }
 

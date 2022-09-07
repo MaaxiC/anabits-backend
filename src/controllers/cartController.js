@@ -24,7 +24,7 @@ class CartController {
         try {
             const cartID = req.params.id
             const cart = await CartApi.deleteById(cartID)
-            if (cart.error || cart.kind) return res.status(404).send({ status: "error", error: ERRORS.MESSAGES.NO_CART })
+            if (!cart || cart.kind) return res.status(404).send({ status: "error", error: ERRORS.MESSAGES.NO_CART })
             res.send({ status: "success", response: 'carrito eliminado correctamente' })
         } catch (error) {
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
