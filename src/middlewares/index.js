@@ -1,1 +1,1 @@
-export { Admin } from "./Admin.js"
+export { Admin } from "./admin.js"
