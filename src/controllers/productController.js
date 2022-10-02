@@ -9,6 +9,7 @@ class ProductController {
             const products = await ProductApi.getAll()
             res.send(products)
         } catch (error) {
+            req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
         }
     }
@@ -20,6 +21,7 @@ class ProductController {
             if (!product || product.kind) return res.status(404).send({ status: "error", error: ERRORS.MESSAGES.NO_PRODUCT })
             res.send(product)
         } catch (error) {
+            req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
         }
     }
@@ -39,6 +41,7 @@ class ProductController {
             res.send(productSaved)
         } catch (error) {
             if (error._original) return res.status(400).send({ status: "error", error: error.details[0].message })
+            req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
         }
     }
@@ -60,6 +63,7 @@ class ProductController {
             res.send(productSaved)
         } catch (error) {
             if (error._original) return res.status(400).send({ status: "error", error: error.details[0].message })
+            req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
         }
     }
@@ -71,6 +75,7 @@ class ProductController {
             if (!response || response.kind) return res.status(404).send({ status: "error", error: ERRORS.MESSAGES.NO_PRODUCT })
             res.send({ status: "success", response: 'producto eliminado correctamente' })
         } catch (error) {
+            req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
         }
     }

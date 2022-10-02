@@ -1,6 +1,7 @@
 import { normalize, schema } from 'normalizr'
 import { MessageDao } from "./daos/index.js"
 import { JOI_VALIDATOR } from './utils/index.js'
+import { debugLogger } from './utils.js'
 
 const socket = (io) => {
     const MessageApi = MessageDao
@@ -53,6 +54,7 @@ const socket = (io) => {
                 io.sockets.emit('listOfMessages', await MessageApi.getAll())
                 return console.log(JSON.stringify(normalizedObject, null, '\t'))
             } catch (error) {
+                debugLogger.error(error.message)
                 console.log({ error: 'error al enviar el mensaje' })
                 return 
             }

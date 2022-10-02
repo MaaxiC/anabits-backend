@@ -1,6 +1,8 @@
 import { Router } from 'express'
+import os from "os"
 
 const infoRouter = Router()
+const CPUs = os.cpus().length;
 
 infoRouter.get('/', async(req,res) => {
     let info = {
@@ -10,7 +12,8 @@ infoRouter.get('/', async(req,res) => {
         memoriaReservada: process.memoryUsage(),
         pathDeEjec: process.title,
         processId: process.pid,
-        carpetaDeProyecto: process.cwd()
+        carpetaDeProyecto: process.cwd(),
+        numeroDeNucleos: CPUs,
     }
     res.send(info)
 })

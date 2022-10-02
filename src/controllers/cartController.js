@@ -16,6 +16,7 @@ class CartController {
             const cartId = cart.id
             res.send({ id: cartId })
         } catch (error) {
+            req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
         }
     }
@@ -27,6 +28,7 @@ class CartController {
             if (!cart || cart.kind) return res.status(404).send({ status: "error", error: ERRORS.MESSAGES.NO_CART })
             res.send({ status: "success", response: 'carrito eliminado correctamente' })
         } catch (error) {
+            req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
         }
     }
@@ -38,6 +40,7 @@ class CartController {
             if (!cart || cart.kind) return res.status(404).send({ status: "error", error: ERRORS.MESSAGES.NO_CART })
             res.send(cart)
         } catch (error) {
+            req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
         }
     }
@@ -54,6 +57,7 @@ class CartController {
             const updatedCart = await CartApi.update(id, cart)
             res.send(updatedCart)
         } catch (error) {
+            req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
         }
     }
@@ -70,6 +74,7 @@ class CartController {
             const updatedCart = await CartApi.update(id, cart)
             res.send(updatedCart)
         } catch (error) {
+            req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
         }
     }
@@ -89,6 +94,7 @@ class CartController {
             if (!cartUpdated || cartUpdated.kind) return res.status(404).send({ status: "error", error: 'error al borrar el producto' }) 
             res.send({ status: "success", response: 'producto eliminado correctamente' })
         } catch (error) {
+            req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
         }
     }
