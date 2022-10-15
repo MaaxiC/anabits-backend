@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import { validUser } from '../middlewares/validUser.js'
+import { validUser, upload } from '../middlewares/index.js'
 import passport from 'passport'
 
 const sessionRouter = Router()
 
-sessionRouter.post('/register', validUser, passport.authenticate('register', { failureRedirect: '/api/sessions/registerfail' }), async (req, res) => {
+sessionRouter.post('/register', upload, validUser, passport.authenticate('register', { failureRedirect: '/api/sessions/registerfail' }), async (req, res) => {
     res.send({ status: "success", payload: req.user.id })
 })
 

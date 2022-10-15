@@ -8,7 +8,7 @@ import { join } from 'path'
 import passport from 'passport'
 import { initializePassport } from './config/passport.js'
 import { socket } from './socket.js'
-import { logger } from './middlewares/logger.js'
+import { logger } from './middlewares/index.js'
 
 //Routers
 import { productRouter, cartRouter, productTestRouter, viewsRouter, sessionRouter, infoRouter } from './routers/index.js'

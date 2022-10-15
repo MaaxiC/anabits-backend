@@ -11,7 +11,7 @@
             <div class="card p-3" style="background-color:blueviolet; width:500px;" >
                 <h1 class="text-center">Register</h1>
                 <br>
-                <form id="registerForm" action="" method="post">
+                <form id="registerForm">
                     <div class="form-floating mb-3">
                         <input id="nombre" class="form-control" type="text" name="nombre" placeholder="First Name">
                         <label for="nombre">First Name</label>
@@ -28,17 +28,17 @@
                         <input id="password" class="form-control" type="password" name="password" placeholder="Password">
                         <label for="password">Password</label>
                     </div>            
-                    <div class="form-floating mb-3"">
+                    <div class="form-floating mb-3">
                         <input id="alias" class="form-control" type="text" name="alias" placeholder="Alias">
                         <label for="alias">Alias</label>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input id="avatar" class="form-control" type="text" name="avatar" placeholder="Avatar">
-                        <label for="avatar">Avatar</label>
-                    </div>
-                    <div class="form-floating mb-3">
+                    <div class="form-floating mb-2">
                         <input id="edad" class="form-control" type="number" name="edad" placeholder="Age">
                         <label for="edad">Age</label>
+                    </div>
+                    <div class="mb-2">
+                        <label for="avatar" class="form-label">Avatar</label>
+                        <input class="form-control" type="file" name="avatar" id="avatar">
                     </div>
                     <div class="d-grid">
                         <button class="btn btn-primary mt-3" id="send"><i class="bi bi-save"></i> Register</button>                 

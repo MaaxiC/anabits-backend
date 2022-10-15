@@ -2,14 +2,13 @@ import { JOI_VALIDATOR } from '../utils/index.js'
 
 const validUser = async (req, res, next) => {
     try {
-        const { nombre, apellido, email, password, alias, avatar, edad } = req.body
+        const { nombre, apellido, email, password, alias, edad } = req.body
         await JOI_VALIDATOR.user.validateAsync({
             nombre, 
             apellido, 
             email, 
             password, 
             alias, 
-            avatar, 
             edad,
         })
         next()
