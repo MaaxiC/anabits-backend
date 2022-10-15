@@ -17,10 +17,27 @@ import { productRouter, cartRouter, productTestRouter, viewsRouter, sessionRoute
 import { createServer } from "http"
 import { Server } from "socket.io"
 
-
 const app = express()
 const httpServer = createServer(app)
 const io = new Server(httpServer)
+
+const sessionMiddleware = session({ 
+    store: MongoStore.create({
+        mongoUrl: config.MONGO_DB.URL,
+        mongoOptions: {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        },
+        ttl: 600
+    }),
+    secret: 'secretKeyAnabitsBackEnd',
+    resave: false,
+    saveUninitialized: false,
+})
+
+const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
+io.use(wrap(sessionMiddleware));
+
 socket(io)
 
 app.use(logger())
@@ -38,19 +55,7 @@ const server = httpServer.listen(config.server.PORT, () => {
 })
 server.on('error', err => console.log(`Error on server ${err}`))
 
-app.use(session({ 
-    store: MongoStore.create({
-        mongoUrl: config.MONGO_DB.URL,
-        mongoOptions: {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        },
-        ttl: 600
-    }),
-    secret: 'secretKeyAnabitsBackEnd',
-    resave: false,
-    saveUninitialized: false,
-}))
+app.use(sessionMiddleware)
 
 initializePassport()
 app.use(passport.initialize())
