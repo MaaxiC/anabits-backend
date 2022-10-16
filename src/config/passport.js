@@ -18,14 +18,13 @@ const initializePassport = () => {
                 return done(null, false)
             }
             const cart = await createCart()
-            console.log(req.file)
             const result = await UserModel.create({
                 nombre, 
                 apellido,
                 email,
                 password: createHash(password),
                 alias, 
-                avatar: req.file.path, 
+                avatar: `/uploads/${req.file.filename}`, 
                 edad,
                 timestamp: DATE.getTimestamp(),
                 cart
