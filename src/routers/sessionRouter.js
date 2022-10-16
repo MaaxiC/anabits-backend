@@ -20,7 +20,8 @@ sessionRouter.post('/login', passport.authenticate('login', { failureRedirect:'/
         edad: req.user.edad,
         alias: req.user.alias,
         avatar: req.user.avatar,
-        id: req.user.id
+        id: req.user.id,
+        cart: req.user.cart
     }
     res.send({ status:"success", payload: req.user.id })
 })

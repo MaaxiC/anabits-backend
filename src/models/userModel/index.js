@@ -13,6 +13,7 @@ const UserSchema = new Schema({
     alias: { type: String, required: true, max: 100 },
     avatar: { type: String, required: true, max: 300 },
     edad: { type: Number, required: true,  },
+    cart: { type: Schema.Types.ObjectId, ref: config.DB.carts, },
     timestamp: { type: String, required: true },
 },
 {

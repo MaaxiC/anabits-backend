@@ -6,18 +6,14 @@ const ProductApi = ProductDao
 const initialCart = { productos: [], }
 
 class CartController {
-    static async createCart(req, res) {
+    static async createCart() {
         try {
-            const { nombre } = req.body
             const cart = await CartApi.save({
-                ...initialCart,
-                nombre: nombre ?? "carritoPrueba",
+                ...initialCart
             })
-            const cartId = cart.id
-            res.send({ id: cartId })
+            return cart.id
         } catch (error) {
-            req.logger.error(error.message)
-            res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
+            console.log({ status: "error", error: error.message })
         }
     }
 

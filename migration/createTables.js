@@ -1,10 +1,11 @@
-import { knex_mariadb, knex_sqlite3 } from "../src/options/config.js";
+import knex from 'knex'
+import { config } from "../src/config/index.js";
 
-const createTableProducts = async (config) => {
+const createTableProducts = async (knexConfig) => {
     try {
-        await config.schema.dropTableIfExists('productos')
+        await knexConfig.schema.dropTableIfExists('productos')
 
-        await config.schema.createTable('productos', table => {
+        await knexConfig.schema.createTable('productos', table => {
             table.increments('id').primary()
             table.string('nombre').notNullable()
             table.string('descripcion')
@@ -20,11 +21,11 @@ const createTableProducts = async (config) => {
     }
 }
 
-const createTableMessages = async (config) => {
+const createTableMessages = async (knexConfig) => {
     try {
-        await config.schema.dropTableIfExists('mensajes')
+        await knexConfig.schema.dropTableIfExists('mensajes')
 
-        await config.schema.createTable('mensajes', table => {
+        await knexConfig.schema.createTable('mensajes', table => {
             table.increments('id').primary()
             table.string('email')
             table.string('message')
@@ -35,6 +36,8 @@ const createTableMessages = async (config) => {
         return error
     }
 }
+
+const knex_mariadb = knex(config.SQL_DB)
 
 createTableProducts(knex_mariadb)
 createTableMessages(knex_mariadb)

@@ -3,8 +3,10 @@ import local from 'passport-local'
 import { UserModel } from "../models/index.js"
 import { createHash, validatePassword } from "../utils.js"
 import { DATE } from '../utils/index.js'
+import { CartController } from "../controllers/index.js"
 
 const LocalStrategy = local.Strategy //local = username + password
+const { createCart } = CartController
 
 const initializePassport = () => {
     passport.use('register', new LocalStrategy({ passReqToCallback: true, usernameField: 'email' }, async (req, email, password, done) => {
@@ -15,6 +17,8 @@ const initializePassport = () => {
                 console.log({ status: 'error', error: 'el usuario ya se encuentra registrado' })
                 return done(null, false)
             }
+            const cart = await createCart()
+            console.log(req.file)
             const result = await UserModel.create({
                 nombre, 
                 apellido,
@@ -23,7 +27,8 @@ const initializePassport = () => {
                 alias, 
                 avatar: req.file.path, 
                 edad,
-                timestamp: DATE.getTimestamp()
+                timestamp: DATE.getTimestamp(),
+                cart
             })
             return done(null, result)
         } catch (error) {

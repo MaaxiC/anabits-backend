@@ -7,7 +7,6 @@ const { Schema, model } = mongoose
 const CartCollection = config.DB.carts
 
 const CartSchema = new Schema({
-    nombre: { type: String, required: true, max: 100 },
     timestamp: { type: String, required: true },
     productos: [ProductSchema],
 },

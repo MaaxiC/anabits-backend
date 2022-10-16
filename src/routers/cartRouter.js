@@ -2,9 +2,9 @@ import { Router } from 'express'
 import { CartController } from "../controllers/index.js"
 
 const cartRouter = Router()
-const { createCart, deleteCart, getProductsInCart, addProductsInCart, updateProductsInCart, deleteProductInCart } = CartController
+const { deleteCart, getProductsInCart, addProductsInCart, updateProductsInCart, deleteProductInCart } = CartController
 
-cartRouter.post("/", createCart)
+//cartRouter.post("/", createCart)
 
 cartRouter.delete('/:id', deleteCart)
 
