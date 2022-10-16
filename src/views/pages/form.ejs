@@ -7,10 +7,10 @@
         <%- include('../partials/head') %>
     </head>
     <body>
+        <%- include('../partials/navbar') %>
         <div class="container mt-5 mb-5 d-flex justify-content-center">
-            <div class="card p-3" style="background-color:coral; width:500px;" >
-                <h2 class="text-center">Enter the product</h2>
-                <br>
+            <div class="card p-3" style="background-color:#533483; width:500px;" >
+                <h2 class="text-center text-white mb-4">Enter the product</h2>
                 <form action="/api/productos" method="post">
                     <div class="form-floating mb-3">
                         <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Title">
@@ -40,7 +40,7 @@
                         <button class="btn btn-primary mt-3" id="send"><i class="bi bi-save"></i> Save</button>
                     </div>
                 </form>
-                <a class="btn btn-info mt-3" href="/"><i class="bi bi-house"></i> Home</a>
+                <a class="btn btn-info text-white mt-3" href="/"><i class="bi bi-house"></i> Home</a>
             </div>
         </div>
     </body>

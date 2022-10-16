@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Profile</title>
+        <%- include('../partials/head') %>
+    </head>
+    <body>
+        <%- include('../partials/navbar') %>
+        <div class="container d-flex justify-content-center mt-5">
+            <div class="card mb-3 p-3" style="background-color: #4C6793">
+                <div class="row g-0">
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <img src="<%=user.avatar%>" class="img-fluid rounded-start" alt="avatar">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text">First Name: <%=user.nombre%></p>
+                            <p class="card-text">Last Name: <%=user.apellido%></p>
+                            <p class="card-text">Email: <%=user.email%></p>
+                            <p class="card-text">Alias: <%=user.alias%></p>
+                            <p class="card-text">Age: <%=user.edad%></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -16,6 +16,6 @@ document.getElementById('sendMessage').addEventListener('click', async (e) => {
 })
 
 const getMessages = listOfMessages => {
-    const chat = listOfMessages.map( msg => `<b style="color:blue">${msg.author.email}</b> - <n style="color:brown">${msg.timestamp}</n> : <i style="color:green">${msg.text}</i>`).join('<br>')
+    const chat = listOfMessages.map( msg => `<b style="color:#E94560">${msg.author.email}</b> - <n style="color:white">${msg.timestamp}</n> : <i style="color:#E94560">${msg.text}</i>`).join('<br>')
     document.getElementById('chat').innerHTML = chat
 }

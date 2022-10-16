@@ -1,6 +1,5 @@
 import { normalize, schema } from "normalizr"
 import { MessageDao } from "./daos/index.js"
-import { JOI_VALIDATOR } from "./utils/index.js"
 import { debugLogger } from "./utils.js"
 
 const socket = (io) => {

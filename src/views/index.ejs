@@ -3,24 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Anabits - Backend</title>
+        <title>Anabits</title>
         <%- include('partials/head') %>
     </head>
     <body>
+        <%- include('partials/navbar') %>
         <div>
-            <h1 class="text-center mt-5" >Anabits - Backend</h1>
-            <div class="container mt-5 d-flex justify-content-center">
-                <h4 class="text-center mt-5" >Bienvenido <%=user.nombre%></h4>
-                <button class="btn btn-primary mt-5 ms-3" id="logoutBtn"><i class="bi bi-door-closed"></i> Log out</button> 
+            <div class="container d-flex justify-content-center">
+                <h4 class="text-center mt-4" >Welcome <%=user.nombre%></h4>
             </div>
-            <div class="container d-flex justify-content-center mt-3">
-                <img src="/img/backend-development.png" alt="logoBackend">
-            </div>
-            <div class="container mt-5 d-flex justify-content-center">
-                <a class="btn btn-info mt-3 me-2" href="/addProduct"><i class="bi bi-plus-circle-fill"></i> Add Product</a>
-                <a class="btn btn-info mt-3 ms-2" href="/listProducts"><i class="bi bi-search"></i> See products</a>
-                <a class="btn btn-info mt-3 ms-3" href="/chat"><i class="bi bi-chat"></i> Enter Chat</a>
-            </div>
+            <h1 class="text-center mt-4" >Products</h1>
+            <div id="productsContainer" class="card-group justify-content-center p-4"></div>
+            <script type="module" src="js/products.js"></script>
             <script type="module" src="js/main.js"></script>
         </div>
     </body>

@@ -8,23 +8,23 @@
         <script src="/socket.io/socket.io.js"></script>
     </head>
     <body>
+        <%- include('../partials/navbar') %>
         <div class="container mt-5 d-flex justify-content-center">
-            <div id="chatContainer" class="card p-3 mb-5" style="background-color:cornflowerblue; width:500px;" >
-                <h1 style="color:blue;" class="text-center">Center of messages</h1>
+            <div id="chatContainer" class="card p-3 mb-5" style="background-color: #0F3460; width:500px;" >
+                <h1 class="text-center">Center of messages</h1>
                 <br>
                 <form id="chatForm">
-                    <hr/>
                     <div id='chat'></div>
                     <hr/>
                     <div class="form-floating mb-3">
-                        <input id="text" class="form-control" type="text" name="text" placeholder="Text">
-                        <label for="text">Text</label>
+                        <textarea class="form-control" placeholder="Leave a comment here" id="text" name="text" style="height: 100px"></textarea>
+                        <label for="text">Comment</label>
                     </div>
                     <div class="d-grid">
-                        <button class="btn btn-primary mt-3" id="sendMessage">Send</button>
+                        <button class="btn btn-primary mt-3" id="sendMessage"><i class="bi bi-send"></i> Send</button>
                     </div>
                 </form>
-                <a class="btn btn-info mt-3" href="/"><i class="bi bi-house"></i> Home</a>
+                <a class="btn btn-info mt-3 text-white" href="/"><i class="bi bi-house"></i> Home</a>
             </div>
         </div>
         <script type="module" src="js/chat.js"></script>

@@ -14,13 +14,18 @@ viewsRouter.get('/addProduct', Admin, (req, res) => {
     res.render('pages/form.ejs')
 })
 
-viewsRouter.get('/listProducts', (req, res) => {
-    if(!req.session.user) return res.redirect('/login')
-    res.render('pages/listProducts.ejs')
-})
-
 viewsRouter.get('/card', (req, res) => {
     res.sendFile(__dirname+'/views/partials/card.ejs')
+})
+
+viewsRouter.get('/profile', (req, res) => {
+    if(!req.session.user) return res.redirect('/login')
+    res.render('pages/profile.ejs', { user: req.session.user })
+})
+
+viewsRouter.get('/cart', (req, res) => {
+    if(!req.session.user) return res.redirect('/login')
+    res.render('pages/cart.ejs', { user: req.session.user })
 })
 
 viewsRouter.get('/chat', (req, res) => {
