@@ -71,7 +71,7 @@ app.use(config.server.routes.carts, cartRouter)
 app.use(config.server.routes.productsTest, productTestRouter)
 app.use(config.server.routes.sessions, sessionRouter)
 app.use(config.server.routes.info, infoRouter)
-app.use((req, res) => {
-    req.logger.warn({ metodo: req.method, ruta: req.url })
-    res.status(404).send({ status: "warning", warning: "Ruta o metodo invalido" });
-});
+// app.use((req, res) => {
+//     req.logger.warn({ metodo: req.method, ruta: req.url })
+//     res.status(404).send({ status: "warning", warning: "Ruta o metodo invalido" });
+// });
