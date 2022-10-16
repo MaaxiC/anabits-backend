@@ -11,7 +11,7 @@ const UserSchema = new Schema({
     email: { type: String, required: true, max: 100 },
     password: { type: String, required: true, max: 100 },
     alias: { type: String, required: true, max: 100 },
-    avatar: { type: String, required: true, max: 300 },
+    avatar: { type: String, required: true },
     edad: { type: Number, required: true,  },
     cart: { type: Schema.Types.ObjectId, ref: config.DB.carts, },
     timestamp: { type: String, required: true },
