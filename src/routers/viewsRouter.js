@@ -18,6 +18,10 @@ viewsRouter.get('/card', (req, res) => {
     res.sendFile(__dirname+'/views/partials/card.ejs')
 })
 
+viewsRouter.get('/cartCard', (req, res) => {
+    res.sendFile(__dirname+'/views/partials/cartCard.ejs')
+})
+
 viewsRouter.get('/profile', (req, res) => {
     if(!req.session.user) return res.redirect('/login')
     res.render('pages/profile.ejs', { user: req.session.user })
