@@ -41,8 +41,11 @@ const config = {
       products: "/api/productos",
       carts: "/api/carrito",
       productsTest: "/api/productos-test",
-      sessions: '/api/sessions',
+      sessions: "/api/sessions",
       info: "/info" 
+    },
+    SESSION: {
+      SECRET_KEY: process.env.SESSION_KEY ?? "secretKeyAnabitsBackEnd",
     },
   },
 };

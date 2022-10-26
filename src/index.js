@@ -30,7 +30,7 @@ const sessionMiddleware = session({
         },
         ttl: 600
     }),
-    secret: 'secretKeyAnabitsBackEnd',
+    secret: config.server.SESSION.SECRET_KEY,
     resave: false,
     saveUninitialized: false,
 })
