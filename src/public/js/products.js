@@ -20,6 +20,17 @@ const getProducts = async () => {
             try {
                 const product = { productId: e.target.id }
                 await API_ROUTES.addProductToCart(cartID.value, product)
+                Toastify({
+                    text: "Product added to cart",
+                    duration: 3000,
+                    destination: "/cart",
+                    close: true,
+                    gravity: "bottom",
+                    position: "right",
+                    style: {
+                      background: "5CB8E4",
+                    }
+                }).showToast();
             } catch (error) {
                 console.log({status: 'error', error: error.message})
             }
