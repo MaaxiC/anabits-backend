@@ -4,8 +4,6 @@ import { CartController } from "../controllers/index.js"
 const cartRouter = Router()
 const { deleteCart, getProductsInCart, addProductsInCart, updateProductsInCart, deleteProductInCart } = CartController
 
-//cartRouter.post("/", createCart)
-
 cartRouter.delete('/:id', deleteCart)
 
 cartRouter.get('/:id/productos', getProductsInCart)

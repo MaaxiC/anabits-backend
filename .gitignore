@@ -1,6 +1,5 @@
 node_modules
 .env
-firebase.json
 error.log
 warn.log
 src/public/uploads/*

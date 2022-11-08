@@ -8,7 +8,6 @@ const PERSISTENCE = {
   filesystem: "filesystem",
   memory: "memory",
   sqldb: "sqldb",
-  firebase: "firebase",
 };
 
 const config = {
@@ -35,7 +34,7 @@ const config = {
   },
   server: {
     PORT: process.env.PORT ?? DEV_PORT,
-    SELECTED_PERSISTENCE: process.env.SELECTED_PERSISTENCE ?? PERSISTENCE.filesystem,
+    SELECTED_PERSISTENCE: process.env.SELECTED_PERSISTENCE ?? PERSISTENCE.memory,
     routes: {
       base: "/api",
       products: "/api/productos",

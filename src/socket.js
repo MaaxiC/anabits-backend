@@ -1,9 +1,8 @@
 import { normalize, schema } from "normalizr"
-import { MessageDao } from "./daos/index.js"
 import { debugLogger } from "./utils.js"
+import MessageService from "./services/messageService.js"
 
 const socket = (io) => {
-  const MessageApi = MessageDao
   const authorSchema = new schema.Entity(
     "authors",
     {},
@@ -17,7 +16,7 @@ const socket = (io) => {
   })
 
   io.on("connection", async (socket) => {
-    socket.emit("listOfMessages", await MessageApi.getAll())
+    socket.emit("listOfMessages", await MessageService.getMessages())
     socket.on("sendMessage", async (data) => {
       try {
         const { email, nombre, apellido, edad, alias, avatar } =
@@ -35,8 +34,8 @@ const socket = (io) => {
           text,
           timestamp,
         }
-        await MessageApi.save(message)
-        const getMessages = await MessageApi.getAll()
+        await MessageService.addMessage(message)
+        const getMessages = await MessageService.getMessages()
         const getList = getMessages.map((message) => ({
           id: message._id,
           author: {
@@ -55,7 +54,7 @@ const socket = (io) => {
           messages: getList,
         }
         const normalizedObject = normalize(listMessages, chatSchema)
-        io.sockets.emit("listOfMessages", await MessageApi.getAll())
+        io.sockets.emit("listOfMessages", await MessageService.getMessages())
         return console.log(JSON.stringify(normalizedObject, null, "\t"))
       } catch (error) {
         debugLogger.error(error.message)

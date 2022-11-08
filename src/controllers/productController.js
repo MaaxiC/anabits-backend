@@ -1,13 +1,13 @@
-import { ProductDao } from "../daos/index.js"
 import { ERRORS, JOI_VALIDATOR } from '../utils/index.js'
-
-const ProductApi = ProductDao
+import ProductService from '../services/productService.js'
+import { ProductDTO } from '../dtos/productDTO.js'
 
 class ProductController {
     static async getProducts(req, res) {
         try {
-            const products = await ProductApi.getAll()
-            res.send(products)
+            const products = await ProductService.getProducts()
+            let parsedProducts = products.map(product => new ProductDTO(product))
+            res.send(parsedProducts)
         } catch (error) {
             req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
@@ -17,9 +17,10 @@ class ProductController {
     static async getProductById(req, res) {
         try {
             const productID = req.params.id
-            const product = await ProductApi.getById(productID)
+            const product = await ProductService.getProduct(productID)
             if (!product || product.kind) return res.status(404).send({ status: "error", error: ERRORS.MESSAGES.NO_PRODUCT })
-            res.send(product)
+            let parsedProduct = new ProductDTO(product)
+            res.send(parsedProduct)
         } catch (error) {
             req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
@@ -37,7 +38,7 @@ class ProductController {
                 precio,
                 stock,
             })
-            const productSaved = await ProductApi.save(product)
+            const productSaved = await ProductService.addProduct(product)
             res.send(productSaved)
         } catch (error) {
             if (error._original) return res.status(400).send({ status: "error", error: error.details[0].message })
@@ -58,7 +59,7 @@ class ProductController {
                 precio,
                 stock,
             })
-            const productSaved = await ProductApi.update(productID, product)
+            const productSaved = await ProductService.updateProduct(productID, product)
             if (!productSaved || productSaved.kind) return res.status(404).send({ status: "error", error: ERRORS.MESSAGES.NO_PRODUCT })
             res.send(productSaved)
         } catch (error) {
@@ -71,7 +72,7 @@ class ProductController {
     static async deleteProduct(req, res) {
         try {
             const productID = req.params.id
-            const response = await ProductApi.deleteById(productID)
+            const response = await ProductService.deleteProduct(productID)
             if (!response || response.kind) return res.status(404).send({ status: "error", error: ERRORS.MESSAGES.NO_PRODUCT })
             res.send({ status: "success", response: 'producto eliminado correctamente' })
         } catch (error) {

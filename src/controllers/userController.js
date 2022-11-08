@@ -1,7 +1,4 @@
-import { UserDao } from "../daos/index.js"
 import { ERRORS } from '../utils/index.js'
-
-const UserApi = UserDao
 
 class UserController {
     static async signup(req, res) {

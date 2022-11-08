@@ -1,6 +1,5 @@
 import express from 'express'
 import { config } from "./config/index.js"
-import { MongodbService } from "./services/index.js"
 import { __dirname } from './utils.js'
 import MongoStore from "connect-mongo"
 import session from "express-session"
@@ -47,8 +46,6 @@ app.use(express.static(join(__dirname, 'public')))
 
 app.set('views', join(__dirname, 'views'))
 app.set('view engine', 'ejs')
-
-MongodbService.init()
 
 const server = httpServer.listen(config.server.PORT, () => {
     console.log(`listening on http://localhost:${server.address().port}`)
