@@ -1,6 +1,6 @@
 import { ERRORS } from '../utils/index.js'
 
-class UserController {
+class SessionController {
     static async signup(req, res) {
         res.send({ status: "success", payload: req.user.id })
     }
@@ -35,4 +35,4 @@ class UserController {
     }
 }
 
-export { UserController };
+export { SessionController };

@@ -8,6 +8,10 @@ import passport from 'passport'
 import { initializePassport } from './config/passport.js'
 import { socket } from './socket.js'
 import { logger } from './middlewares/index.js'
+import { ApolloServer } from '@apollo/server'
+import { startStandaloneServer } from '@apollo/server/standalone';
+import { typeDefs } from './typeDefs.js'
+import { resolvers } from './resolvers.js'
 
 //Routers
 import { productRouter, cartRouter, productTestRouter, viewsRouter, sessionRouter, infoRouter } from './routers/index.js'
@@ -68,6 +72,17 @@ app.use(config.server.routes.carts, cartRouter)
 app.use(config.server.routes.productsTest, productTestRouter)
 app.use(config.server.routes.sessions, sessionRouter)
 app.use(config.server.routes.info, infoRouter)
+
+const aServer = new ApolloServer({
+    typeDefs,
+    resolvers,
+})
+
+const { url } = await startStandaloneServer(aServer, {
+    listen: { port: 4000 },
+})
+console.log(`🚀 Graphql Server ready at: ${url}`)
+
 app.use((req, res) => {
     req.logger.warn({ metodo: req.method, ruta: req.url })
     res.status(404).send({ status: "warning", warning: "Ruta o metodo invalido" });
