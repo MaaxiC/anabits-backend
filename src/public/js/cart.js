@@ -27,6 +27,16 @@ const listProductsInCart = async () => {
             }
         })
     }
+
+    const btnCheckout = document.getElementById('btnCheckout')
+
+    if (btnCheckout) {
+        btnCheckout.addEventListener('click', async (e) => {
+            e.preventDefault()
+            await API_ROUTES.deleteAllProductsFromCart(cartID)
+            utils.createAlertWithCallback('success', 'Compra realizada', 'Gracias por su compra. Se le enviará un mail con los detalles de su compra.')
+        })
+    }
 }
 
 window.addEventListener('load', listProductsInCart)

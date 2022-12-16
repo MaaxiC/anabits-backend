@@ -1,7 +1,5 @@
-const ADMIN = true
-
 const Admin = (req, res, next) => {
-  if (!ADMIN) return res.send({ error: -1, descripcion: 'metodo no autorizado para la ruta especificada' })
+  if (!req.session.user.admin) return res.send({ status: 'error', payload: 'metodo no autorizado para la ruta especificada' })
   next()
 }
 

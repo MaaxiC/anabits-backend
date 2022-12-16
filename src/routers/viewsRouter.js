@@ -11,7 +11,7 @@ viewsRouter.get('/', (req, res) => {
 
 viewsRouter.get('/addProduct', Admin, (req, res) => {
     if(!req.session.user) return res.redirect('/login')
-    res.render('pages/form.ejs')
+    res.render('pages/form.ejs', { user: req.session.user })
 })
 
 viewsRouter.get('/card', (req, res) => {
@@ -34,7 +34,7 @@ viewsRouter.get('/cart', (req, res) => {
 
 viewsRouter.get('/chat', (req, res) => {
     if(!req.session.user) return res.redirect('/login')
-    res.render('pages/chat.ejs')
+    res.render('pages/chat.ejs', { user: req.session.user })
 })
 
 viewsRouter.get('/register', (req, res) => {

@@ -1,8 +1,10 @@
 import { ERRORS } from '../utils/index.js'
 import CartService from '../services/cartService.js'
 import ProductService from '../services/productService.js'
+import { MailingService } from '../services/mailing.js'
 
 const initialCart = { productos: [], }
+const mailer = new MailingService
 
 class CartController {
     static async createCart() {
@@ -88,6 +90,46 @@ class CartController {
             const cartUpdated = await CartService.updateCart(cartID, cart)
             if (!cartUpdated || cartUpdated.kind) return res.status(404).send({ status: "error", error: 'error al borrar el producto' }) 
             res.send({ status: "success", response: 'producto eliminado correctamente' })
+        } catch (error) {
+            req.logger.error(error.message)
+            res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })
+        }
+    }
+
+    static async deleteAllProductsInCart(req, res) {
+        try {
+            const cartID = req.params.id
+            const cart = await CartService.getCart(cartID)
+            if (!cart || cart.kind) return res.status(404).send({ status: "error", error: ERRORS.MESSAGES.NO_CART }) 
+
+            let message = ''
+            let total = 0
+            for (let product of cart.productos) {
+                total += product.precio
+                message += `<div>
+                    <ul>
+                        <li><h3>${product.nombre} - $${product.precio}</h3></li>
+                    </ul>
+                </div>`
+            }
+            message += `<h3>TOTAL: ${total}</h3>`
+
+            await mailer.sendMail({
+                from: 'anabits@backend.com',
+                to: req.session.user.email,
+                subject: 'Recibo de compra',
+                html: `<div>
+                    <h1>Gracias por tu compra!</h1>
+                    <p>Pedido generado con el numero de orden ${cartID}</p>
+                    <p>Productos comprados:</p>
+                    ${message}
+                </div>`
+            });
+
+            cart.productos = []
+            const cartUpdated = await CartService.updateCart(cartID, cart)
+            if (!cartUpdated || cartUpdated.kind) return res.status(404).send({ status: "error", error: 'error al actualizar la informacion del carrito' }) 
+            res.send({ status: "success", response: 'carrito actualizado correctamente' })
         } catch (error) {
             req.logger.error(error.message)
             res.status(500).send({ status: "error", error: ERRORS.MESSAGES.INTERNAL_ERROR })

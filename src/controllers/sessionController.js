@@ -20,11 +20,12 @@ class SessionController {
             id: req.user.id,
             cart: req.user.cart
         }
+        if (req.user.email === 'test@test.com') req.session.user.admin = true
         res.send({ status:"success", payload: req.user.id })
     }
 
     static async loginFail(req,res) {
-        res.send({ status: 'error', error: 'fallo el inicio de sesion' })
+        res.send({ status: 'error', error: 'Fallo el inicio de sesion' })
     }
 
     static async logout(req, res) {

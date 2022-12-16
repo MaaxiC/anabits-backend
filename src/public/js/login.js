@@ -1,3 +1,5 @@
+import { utils } from "./utils.js"
+
 const form = document.getElementById('loginForm')
 
 form.addEventListener('submit', (e) => {
@@ -13,5 +15,5 @@ form.addEventListener('submit', (e) => {
         }
     })
     .then(result => result.json())
-    .then(data => data.status == 'success' ? window.location.replace('/') : console.log(data))
+    .then(data => data.status == 'success' ? window.location.replace('/') : utils.createAlert(data.status, 'Error', data.error))
 })

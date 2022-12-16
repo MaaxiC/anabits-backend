@@ -9,9 +9,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
+          <% if(user.admin) { %>
           <li class="nav-item">
             <a class="btn" href="/addProduct"><i class="bi bi-plus-circle"></i> Add Product</a>
           </li>
+          <% } %>
           <li class="nav-item">
             <a class="btn" href="/chat"><i class="bi bi-chat"></i> Enter Chat</a>
           </li>

@@ -13,27 +13,27 @@
                 <h2 class="text-center text-white mb-4">Enter the product</h2>
                 <form action="/api/productos" method="post">
                     <div class="form-floating mb-3">
-                        <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Title">
+                        <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Title" required>
                         <label for="nombre">Title</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input id="descripcion" class="form-control" type="text" name="descripcion" placeholder="Description">
+                        <input id="descripcion" class="form-control" type="text" name="descripcion" placeholder="Description" required>
                         <label for="descripcion">Description</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input id="codigo" class="form-control" type="text" name="codigo" placeholder="Code">
+                        <input id="codigo" class="form-control" type="text" name="codigo" placeholder="Code" required>
                         <label for="codigo">Code</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input id="precio" class="form-control" type="number" name="precio" placeholder="Price">
+                        <input id="precio" class="form-control" type="number" name="precio" placeholder="Price" required>
                         <label for="precio">Price</label>
                     </div>            
                     <div class="form-floating mb-3">
-                        <input id="foto" class="form-control" type="text" name="foto" placeholder="Thumbnail">
+                        <input id="foto" class="form-control" type="text" name="foto" placeholder="Thumbnail" required>
                         <label for="foto">Thumbnail</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input id="stock" class="form-control" type="number" name="stock" placeholder="Stock">
+                        <input id="stock" class="form-control" type="number" name="stock" placeholder="Stock" required>
                         <label for="stock">Stock</label>
                     </div>
                     <div class="d-grid">

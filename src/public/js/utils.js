@@ -11,5 +11,21 @@ const createCartProductCard = async (products) => {
     let templateCompiled = ejs.compile(templateText)
     return templateCompiled({ products })
 }
+
+export const createAlert = (type,title,message) => Swal.fire({
+    icon:type,
+    title,
+    text:message,
+    timer:3000,
+    showConfirmButton:false
+})
+
+export const createAlertWithCallback = (type,title,message, callback) => Swal.fire({
+    icon:type,
+    title,
+    text:message,
+    timer:3000,
+    showConfirmButton:false
+}).then(result => window.location.replace('/'));
   
-export const utils = { createProductCard, createCartProductCard }
+export const utils = { createProductCard, createCartProductCard, createAlert, createAlertWithCallback }

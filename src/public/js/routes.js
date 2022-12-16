@@ -35,5 +35,13 @@ const deleteProductFromCart = async (id, id_prod) => {
     const cartUpdated = await response.json()
     return cartUpdated
 }
+
+const deleteAllProductsFromCart = async (id) => {
+    const response = await fetch(`/api/carrito/${id}/productos`, {
+        method: "DELETE"
+    })
+    const cartUpdated = await response.json()
+    return cartUpdated
+}
   
-export const API_ROUTES = { getProducts, getProductById, addProductToCart, getProductsInCart, deleteProductFromCart }
+export const API_ROUTES = { getProducts, getProductById, addProductToCart, getProductsInCart, deleteProductFromCart, deleteAllProductsFromCart }
